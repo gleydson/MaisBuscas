@@ -1,13 +1,16 @@
 {
-  "name": "MaisBusca",
+  "name": "mais-busca",
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "android": "react-native run-android",
-    "ios": "react-native run-ios",
-    "start": "react-native start",
+    "android": "npx react-native run-android",
+    "ios": "npx react-native run-ios",
+    "start": "npx react-native start --reset-cache",
     "test": "jest",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "lint:fix": "eslint . --ext .js,.jsx,.ts,.tsx --fix",
+    "clean": "rm -Rf node_modules && yarn cache clean && yarn",
+    "install": "cd ios && pod install && cd .."
   },
   "dependencies": {
     "react": "16.11.0",
