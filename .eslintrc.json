@@ -18,6 +18,7 @@
   "plugins": [
     "react",
     "@typescript-eslint",
+    "import-helpers",
     "prettier"
   ],
   "extends": [
@@ -28,6 +29,24 @@
     "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
+    "react/prop-types": "off",
+    "react/jsx-curly-newline": "off",
+    "@typescript-eslint/no-explicit-any": "off",
+    "react/jsx-props-no-spreading": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "import/no-unresolved": "off",
+    "max-len": [
+      "error",
+      {
+        "code": 80,
+        "ignoreUrls": true,
+        "ignoreComments": true,
+        "ignoreTrailingComments": true,
+        "ignorePattern": "^\\s*const\\s.+=\\s*require\\s*\\("
+      }
+    ],
+    "@typescript-eslint/camelcase": "off",
+    "import/prefer-default-export": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -50,6 +69,39 @@
           ".ts",
           ".tsx"
         ]
+      }
+    ],
+    "import-helpers/order-imports": [
+      "warn",
+      {
+        "newlinesBetween": "always",
+        "groups": [
+          [
+            "/^react/",
+            "/^@react/"
+          ],
+          "module",
+          [
+            "/^@components/",
+            "/^@services/",
+            "/^@screens/",
+            "/^@assets/",
+            "/ˆ@config/",
+            "/^@styles/",
+            "/^@hooks/",
+            "/ˆ@store/",
+            "/ˆ@ducks/"
+          ],
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
+        "alphabetize": {
+          "order": "asc",
+          "ignoreCase": true
+        }
       }
     ]
   },
