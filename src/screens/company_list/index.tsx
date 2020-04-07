@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
+import CompanyItem from '@components/company_item';
 import Header from '@components/header';
 import Search from '@components/search';
-import ServiceItem from '@components/service_item';
 import api from '@services/api';
 import * as CompanyService from '@services/database/services/company_service';
 
 import {
   KeyboardSafe,
   Container,
-  ContainerServices,
-  TouchableServiceItem,
+  ContainerCompany,
+  TouchableCompanyItem,
 } from './styled';
 
 export interface Company {
@@ -29,16 +29,15 @@ export default function company_list() {
   const [searchText, setSearchText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  async function loadServices() {
+  async function loadCompanies() {
     const data = await CompanyService.getAllCompanies(searchText);
     setCompanies(data);
   }
 
-  async function fetchServices() {
+  async function fetchCompanies() {
     setIsLoading(true);
     try {
       const response = await api.get('/services');
-      console.log('foi feito');
       await CompanyService.saveCompanies(response.data);
     } catch (err) {
       console.log('error', err);
@@ -48,25 +47,25 @@ export default function company_list() {
 
   useEffect(() => {
     if (!companies) {
-      fetchServices();
+      fetchCompanies();
     }
-    loadServices();
+    loadCompanies();
   }, [searchText]);
 
-  function goToServiceDetails() {
+  function goToCompanyDetails() {
     Keyboard.dismiss();
     // TODO:
   }
 
   function renderItem(item: { item: Company }) {
     return (
-      <TouchableServiceItem onPress={goToServiceDetails}>
-        <ServiceItem
+      <TouchableCompanyItem onPress={goToCompanyDetails}>
+        <CompanyItem
           name={item.item.name}
           address={item.item.address}
           phone={item.item.whatsapp}
         />
-      </TouchableServiceItem>
+      </TouchableCompanyItem>
     );
   }
 
@@ -79,11 +78,11 @@ export default function company_list() {
       <Container>
         <Header title='example' />
         <Search onSearch={handleSearch} onChangeText={setSearchText} />
-        <ContainerServices
+        <ContainerCompany
           data={companies}
           renderItem={renderItem}
           keyExtractor={item => String(item.id)}
-          onRefresh={fetchServices}
+          onRefresh={fetchCompanies}
           refreshing={isLoading}
         />
       </Container>

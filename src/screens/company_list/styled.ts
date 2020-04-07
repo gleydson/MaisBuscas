@@ -10,13 +10,13 @@ export const Container = styled.View`
   flex: 1;
 `;
 
-export const ContainerServices = styled(FlatList as new () => FlatList).attrs({
+export const ContainerCompany = styled(FlatList as new () => FlatList).attrs({
   showsVerticalScrollIndicator: false,
   keyboardShouldPersistTaps: 'handled',
   contentContainerStyle: { paddingHorizontal: 15, paddingVertical: 10 },
 })``;
 
-export const TouchableServiceItem = styled.TouchableOpacity.attrs({
+export const TouchableCompanyItem = styled.TouchableOpacity.attrs({
   activeOpacity: 0.5,
 })`
   padding-bottom: 10px;

@@ -22,7 +22,7 @@ export const ContainerInfo = styled.View`
   justify-content: space-between;
 `;
 
-export const ServiceName = styled.Text`
+export const CompanyName = styled.Text`
   font-size: 14px;
   text-transform: uppercase;
   font-weight: 500;

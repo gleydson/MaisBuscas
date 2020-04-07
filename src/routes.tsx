@@ -4,8 +4,8 @@ import React from 'react';
 import CustomDrawerContent from '@components/drawer_content';
 import About from '@screens/about';
 import Cities from '@screens/cities';
-import ServiceDetails from '@screens/service_details';
-import ServiceList from '@screens/service_list';
+import CompanyDetails from '@screens/company_details';
+import CompanyList from '@screens/company_list';
 
 const Drawer = createDrawerNavigator();
 
@@ -21,10 +21,10 @@ export default function Routes() {
           swipeEnabled: false,
         }}
       />
-      <Drawer.Screen name='ServiceList' component={ServiceList} />
+      <Drawer.Screen name='CompanyList' component={CompanyList} />
       <Drawer.Screen
-        name='ServiceDetails'
-        component={ServiceDetails}
+        name='CompanyDetails'
+        component={CompanyDetails}
         options={{
           swipeEnabled: false,
         }}

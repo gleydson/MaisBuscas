@@ -1,4 +1,4 @@
-import { Company } from '@screens/service_list';
+import { Company } from '@screens/company_list';
 import getRealm from '@services/database';
 import CompanySchema from '@services/database/schemas/company_schema';
 

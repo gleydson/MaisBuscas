@@ -36,7 +36,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   function goHome() {
-    props.navigation.navigate('ServiceList');
+    props.navigation.navigate('CompanyList');
   }
 
   function goCities() {

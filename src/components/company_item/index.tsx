@@ -8,7 +8,7 @@ import {
   ContainerInfo,
   ContainerAddress,
   Address,
-  ServiceName,
+  CompanyName,
   Button,
   ButtonText,
   Icon,
@@ -21,9 +21,9 @@ interface Props {
   phone: string;
 }
 
-const defaultServiceLogo = require('@assets/images/default-service-logo.png');
+const defaultCompanyLogo = require('@assets/images/default-company-logo.png');
 
-const service_item: React.SFC<Props> = ({ logo, name, address, phone }) => {
+const company_item: React.SFC<Props> = ({ logo, name, address, phone }) => {
   async function callTo(phoneNumber: string) {
     const tel = `tel:${phoneNumber}`;
     const canOpenURL = await Linking.canOpenURL(tel);
@@ -36,12 +36,12 @@ const service_item: React.SFC<Props> = ({ logo, name, address, phone }) => {
     <Container>
       <ContainerLogo>
         <Logo
-          source={logo ? { uri: logo } : defaultServiceLogo}
-          defaultSource={defaultServiceLogo}
+          source={logo ? { uri: logo } : defaultCompanyLogo}
+          defaultSource={defaultCompanyLogo}
         />
       </ContainerLogo>
       <ContainerInfo>
-        <ServiceName>{name}</ServiceName>
+        <CompanyName>{name}</CompanyName>
         <ContainerAddress>
           <Icon name='map-marker' />
 
@@ -55,4 +55,4 @@ const service_item: React.SFC<Props> = ({ logo, name, address, phone }) => {
   );
 };
 
-export default service_item;
+export default company_item;

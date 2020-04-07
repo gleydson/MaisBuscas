@@ -1,6 +1,4 @@
-import React, { useState, useEffect } from 'react';
-
-import getRealm from '@services/database';
+import React, { useState } from 'react';
 
 import {
   Container,
@@ -76,16 +74,14 @@ export default function cities({ navigation }: Props) {
     },
   ]);
 
-  useEffect(() => { });
-
-  function goToServiceListScreen(locationId: number) {
+  function goToCompanyListScreen(locationId: number) {
     navigation.navigate('ServiceList', { locationId });
   }
 
   function renderItem(item: { item: Location }) {
     return (
       <TouchableLocationItem
-        onPress={() => goToServiceListScreen(item.item.id)}
+        onPress={() => goToCompanyListScreen(item.item.id)}
       >
         <LocationItem>
           <Description>{`${item.item.city} - ${item.item.state}`}</Description>
