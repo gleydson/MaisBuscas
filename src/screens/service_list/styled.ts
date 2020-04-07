@@ -1,16 +1,20 @@
-import { FlatList } from 'react-native';
+import { FlatList, Keyboard, Platform } from 'react-native';
 
 import styled from 'styled-components/native';
 
-export const Container = styled.SafeAreaView`
+export const KeyboardSafe = styled.TouchableWithoutFeedback.attrs({
+  onPress: Keyboard.dismiss,
+})``;
+
+export const Container = styled.View`
   flex: 1;
 `;
 
 export const ContainerServices = styled(FlatList as new () => FlatList).attrs({
   showsVerticalScrollIndicator: false,
-})`
-  padding: 10px 15px 0 15px;
-`;
+  keyboardShouldPersistTaps: 'handled',
+  contentContainerStyle: { paddingHorizontal: 15, paddingVertical: 10 },
+})``;
 
 export const TouchableServiceItem = styled.TouchableOpacity.attrs({
   activeOpacity: 0.5,

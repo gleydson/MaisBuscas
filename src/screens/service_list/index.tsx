@@ -1,12 +1,20 @@
-/* eslint-disable max-len */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Keyboard } from 'react-native';
 
 import Header from '@components/header';
+import Search from '@components/search';
 import ServiceItem from '@components/service_item';
+import api from '@services/api';
+import * as CompanyService from '@services/database/services/company_service';
 
-import { Container, ContainerServices, TouchableServiceItem } from './styled';
+import {
+  KeyboardSafe,
+  Container,
+  ContainerServices,
+  TouchableServiceItem,
+} from './styled';
 
-interface Service {
+export interface Company {
   id: number;
   name: string;
   address: string;
@@ -16,115 +24,41 @@ interface Service {
   locationId: number;
 }
 
-export default function service_list() {
-  const [services, setServices] = useState([
-    {
-      id: 1,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: 'Rua A, 55 - Eusébio, CE',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 2,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 3,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 4,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 5,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 6,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 7,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 8,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 9,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-    {
-      id: 10,
-      name: '1° Oficio de Registro de Imóveis e Anexos',
-      address: '',
-      whatsapp: '7865434567',
-      website: 'www.google.com',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!',
-      locationId: 1,
-    },
-  ]);
+export default function company_list() {
+  const [companies, setCompanies] = useState([]);
+  const [searchText, setSearchText] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+
+  async function loadServices() {
+    const data = await CompanyService.getAllCompanies(searchText);
+    setCompanies(data);
+  }
+
+  async function fetchServices() {
+    setIsLoading(true);
+    try {
+      const response = await api.get('/services');
+      console.log('foi feito');
+      await CompanyService.saveCompanies(response.data);
+    } catch (err) {
+      console.log('error', err);
+    }
+    setIsLoading(false);
+  }
+
+  useEffect(() => {
+    if (!companies) {
+      fetchServices();
+    }
+    loadServices();
+  }, [searchText]);
 
   function goToServiceDetails() {
+    Keyboard.dismiss();
     // TODO:
   }
 
-  function renderItem(item: { item: Service }) {
+  function renderItem(item: { item: Company }) {
     return (
       <TouchableServiceItem onPress={goToServiceDetails}>
         <ServiceItem
@@ -136,14 +70,23 @@ export default function service_list() {
     );
   }
 
+  function handleSearch() {
+    Keyboard.dismiss();
+  }
+
   return (
-    <Container>
-      <Header title='example' />
-      <ContainerServices
-        data={services}
-        renderItem={renderItem}
-        keyExtractor={item => String(item.id)}
-      />
-    </Container>
+    <KeyboardSafe>
+      <Container>
+        <Header title='example' />
+        <Search onSearch={handleSearch} onChangeText={setSearchText} />
+        <ContainerServices
+          data={companies}
+          renderItem={renderItem}
+          keyExtractor={item => String(item.id)}
+          onRefresh={fetchServices}
+          refreshing={isLoading}
+        />
+      </Container>
+    </KeyboardSafe>
   );
 }
