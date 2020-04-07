@@ -3,7 +3,7 @@ import FeatherIcon from 'react-native-vector-icons/Feather';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  height: 70px;
+  height: 80px;
   background-color: ${props => props.theme.colors.primary};
   flex-direction: row;
   justify-content: space-between;
@@ -27,6 +27,8 @@ export const Right = styled.View`
   align-items: center;
   justify-content: center;
 `;
+
+export const Logo = styled.Image``;
 
 export const Title = styled.Text``;
 

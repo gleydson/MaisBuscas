@@ -1,7 +1,17 @@
 import { useNavigation, DrawerActions } from '@react-navigation/native';
 import React from 'react';
 
-import { Container, Left, Center, Right, Title, IconFeather } from './styled';
+import {
+  Container,
+  Left,
+  Center,
+  Right,
+  Title,
+  IconFeather,
+  Logo,
+} from './styled';
+
+const logoHeader = require('@assets/images/logo-header.png');
 
 interface Props {
   goBackEnabled?: boolean;
@@ -30,6 +40,7 @@ const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
     <Container>
       <Left onPress={handleLeftIcon}>{renderLeftIcon()}</Left>
       <Center>
+        <Logo source={logoHeader} />
         <Title>{title}</Title>
       </Center>
       <Right />
