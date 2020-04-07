@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
+import getRealm from '@services/database';
 
 import {
   Container,
@@ -73,6 +75,8 @@ export default function cities({ navigation }: Props) {
       city: 'Vilhena',
     },
   ]);
+
+  useEffect(() => { });
 
   function goToServiceListScreen(locationId: number) {
     navigation.navigate('ServiceList', { locationId });
