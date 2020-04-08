@@ -4,9 +4,8 @@ export default class LocationSchema {
     primaryKey: 'id',
     properties: {
       id: { type: 'int', indexed: true },
-      name: 'string',
-      description: 'string',
-      address: 'string',
+      city: 'string',
+      state: 'string',
     },
   };
 }

@@ -54,10 +54,34 @@ export async function saveCompanies(companies: Company[]) {
   }
 }
 
-export async function getAllCompanies(filter?: string) {
+export async function getCompaniesByLocationId(
+  locationId: number,
+  filter: string
+) {
   const realm = await getRealm();
-  return realm
-    .objects<Company>(CompanySchema.schema.name)
-    .filtered(`name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`)
-    .sorted('name', false);
+  try {
+    return realm
+      .objects<Company>(CompanySchema.schema.name)
+      .filtered(
+        // eslint-disable-next-line max-len
+        `locationId = '${locationId}' AND name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
+      )
+      .sorted('name', false);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function getAllCompanies(filter: string) {
+  const realm = await getRealm();
+  try {
+    return realm
+      .objects<Company>(CompanySchema.schema.name)
+      .filtered(
+        `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
+      )
+      .sorted('name', false);
+  } catch (err) {
+    throw new Error(err);
+  }
 }

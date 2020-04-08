@@ -40,7 +40,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   function goCities() {
-    props.navigation.navigate('Cities');
+    props.navigation.navigate('LocationList');
   }
 
   function goAbout() {

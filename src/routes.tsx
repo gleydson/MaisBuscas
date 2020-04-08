@@ -3,9 +3,9 @@ import React from 'react';
 
 import CustomDrawerContent from '@components/drawer_content';
 import About from '@screens/about';
-import Cities from '@screens/cities';
 import CompanyDetails from '@screens/company_details';
 import CompanyList from '@screens/company_list';
+import LocationList from '@screens/location_list';
 
 const Drawer = createDrawerNavigator();
 
@@ -15,8 +15,8 @@ export default function Routes() {
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen
-        name='Cities'
-        component={Cities}
+        name='LocationList'
+        component={LocationList}
         options={{
           swipeEnabled: false,
         }}

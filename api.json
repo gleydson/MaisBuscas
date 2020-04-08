@@ -1,5 +1,5 @@
 {
-  "services": [
+  "companies": [
     {
       "id": 1,
       "name": "1° Oficio de Registro de Imóveis e Anexos",
@@ -16,7 +16,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 5
     },
     {
       "id": 3,
@@ -25,7 +25,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "",
-      "locationId": 1
+      "locationId": 6
     },
     {
       "id": 4,
@@ -34,7 +34,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 3
     },
     {
       "id": 5,
@@ -52,7 +52,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 2
     },
     {
       "id": 7,
@@ -61,7 +61,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 2
     },
     {
       "id": 8,
@@ -70,7 +70,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 8
     },
     {
       "id": 9,
@@ -79,7 +79,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 5
     },
     {
       "id": 10,
@@ -88,7 +88,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 6
     },
     {
       "id": 11,
@@ -97,7 +97,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 6
     },
     {
       "id": 12,
@@ -106,7 +106,7 @@
       "whatsapp": "7865434567",
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
-      "locationId": 1
+      "locationId": 2
     },
     {
       "id": 13,
@@ -116,6 +116,48 @@
       "website": "www.google.com",
       "description": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis neque saepe amet facere fuga doloribus maxime placeat esse! Animi saepe fugit fuga ex recusandae itaque quia sit consequuntur quod similique!",
       "locationId": 1
+    }
+  ],
+  "locations": [
+    {
+      "id": 1,
+      "state": "RO",
+      "city": "Cacoal"
+    },
+    {
+      "id": 2,
+      "state": "MT",
+      "city": "Campo Novo dos Parecis"
+    },
+    {
+      "id": 3,
+      "state": "RO",
+      "city": "Nova Brasilândia do Oeste"
+    },
+    {
+      "id": 4,
+      "state": "RO",
+      "city": "Pimenta Bueno"
+    },
+    {
+      "id": 5,
+      "state": "RO",
+      "city": "Rolim de Moura"
+    },
+    {
+      "id": 6,
+      "state": "RO",
+      "city": "São Miguel do Guaporé"
+    },
+    {
+      "id": 7,
+      "state": "MT",
+      "city": "Sapezal"
+    },
+    {
+      "id": 8,
+      "state": "RO",
+      "city": "Vilhena"
     }
   ]
 }

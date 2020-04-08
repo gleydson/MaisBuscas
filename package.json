@@ -11,9 +11,10 @@
     "lint:fix": "eslint src/** --ext .ts,.tsx --fix",
     "clean": "rm -Rf node_modules && yarn cache clean && yarn",
     "postinstall": "cd ios && pod install && cd ..",
-    "dev": "json-server --watch api.json --port 3333"
+    "server": "json-server --watch api.json --port 3333"
   },
   "dependencies": {
+    "@react-native-community/async-storage": "^1.9.0",
     "@react-native-community/masked-view": "^0.1.7",
     "@react-navigation/drawer": "^5.4.0",
     "@react-navigation/native": "^5.1.4",

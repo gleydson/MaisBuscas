@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
+import Realm from 'realm';
+
 import CompanyItem from '@components/company_item';
 import Header from '@components/header';
 import Search from '@components/search';
-import api from '@services/api';
-import * as CompanyService from '@services/database/services/company_service';
+import { getCompanies } from '@services/api';
+import {
+  getAllCompanies,
+  saveCompanies,
+} from '@services/database/services/company_service';
 
 import {
   KeyboardSafe,
@@ -25,30 +30,30 @@ export interface Company {
 }
 
 export default function company_list() {
-  const [companies, setCompanies] = useState([]);
-  const [searchText, setSearchText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [companies, setCompanies] = useState<
+    Realm.Results<Company & Realm.Object>
+  >();
+  const [searchText, setSearchText] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   async function loadCompanies() {
-    const data = await CompanyService.getAllCompanies(searchText);
+    const data = await getAllCompanies(searchText);
     setCompanies(data);
   }
 
   async function fetchCompanies() {
     setIsLoading(true);
     try {
-      const response = await api.get('/services');
-      await CompanyService.saveCompanies(response.data);
+      const response = await getCompanies();
+      await saveCompanies(response.data);
+      setIsLoading(false);
     } catch (err) {
-      console.log('error', err);
+      // eslint-disable-next-line no-console
+      console.log(`error ${err}`);
     }
-    setIsLoading(false);
   }
 
   useEffect(() => {
-    if (!companies) {
-      fetchCompanies();
-    }
     loadCompanies();
   }, [searchText]);
 
