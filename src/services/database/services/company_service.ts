@@ -55,16 +55,21 @@ export async function saveCompanies(companies: Company[]) {
 }
 
 export async function getCompaniesByLocationId(
-  locationId: number,
+  locationId: string,
   filter: string
 ) {
   const realm = await getRealm();
   try {
-    return realm
+    const elementsByLocationId = realm
       .objects<Company>(CompanySchema.schema.name)
       .filtered(
         // eslint-disable-next-line max-len
-        `locationId = '${locationId}' AND name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
+        `locationId = $0`,
+        Number(locationId)
+      );
+    return elementsByLocationId
+      .filtered(
+        `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
       )
       .sorted('name', false);
   } catch (err) {

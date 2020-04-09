@@ -39,7 +39,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
     props.navigation.navigate('CompanyList');
   }
 
-  function goCities() {
+  function goLocations() {
     props.navigation.navigate('LocationList');
   }
 
@@ -110,7 +110,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
       <Item
         label='Todas as cidades'
         icon={iconProps => renderIcon({ name: 'map', ...iconProps })}
-        onPress={goCities}
+        onPress={goLocations}
       />
       <Item
         label='Sobre Nós'

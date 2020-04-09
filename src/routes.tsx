@@ -7,7 +7,14 @@ import CompanyDetails from '@screens/company_details';
 import CompanyList from '@screens/company_list';
 import LocationList from '@screens/location_list';
 
-const Drawer = createDrawerNavigator();
+export type RootDrawerParamList = {
+  LocationList: undefined;
+  CompanyList: { locationId: string };
+  About: undefined;
+  CompanyDetails: undefined;
+};
+
+const Drawer = createDrawerNavigator<RootDrawerParamList>();
 
 export default function Routes() {
   return (

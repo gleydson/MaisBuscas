@@ -1,7 +1,13 @@
+import {
+  RouteProp,
+  ParamListBase,
+  NavigationProp,
+} from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
 import Realm from 'realm';
+import { RootDrawerParamList } from 'routes';
 
 import CompanyItem from '@components/company_item';
 import Header from '@components/header';
@@ -10,6 +16,7 @@ import { getCompanies } from '@services/api';
 import {
   getAllCompanies,
   saveCompanies,
+  getCompaniesByLocationId,
 } from '@services/database/services/company_service';
 
 import {
@@ -29,15 +36,24 @@ export interface Company {
   locationId: number;
 }
 
-export default function company_list() {
+type CompanyListScreenRouteProp = RouteProp<RootDrawerParamList, 'CompanyList'>;
+
+interface Props {
+  navigation: NavigationProp<ParamListBase>;
+  route: CompanyListScreenRouteProp;
+}
+
+export default function company_list({ route, navigation }: Props) {
   const [companies, setCompanies] = useState<
     Realm.Results<Company & Realm.Object>
   >();
+  const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [currentLocationId, setCurrentLocationId] = useState('');
 
   async function loadCompanies() {
-    const data = await getAllCompanies(searchText);
+    const data = await getCompaniesByLocationId(currentLocationId, searchText);
     setCompanies(data);
   }
 
@@ -46,16 +62,24 @@ export default function company_list() {
     try {
       const response = await getCompanies();
       await saveCompanies(response.data);
-      setIsLoading(false);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(`error ${err}`);
     }
+    setIsLoading(false);
   }
 
   useEffect(() => {
+    setCurrentLocationId(route.params.locationId);
+    const unsubscribe = navigation.addListener('focus', () => {
+      setIsFocused(true);
+    });
     loadCompanies();
-  }, [searchText]);
+    return () => {
+      unsubscribe();
+      setIsFocused(false);
+    };
+  }, [searchText, currentLocationId, navigation, isFocused]);
 
   function goToCompanyDetails() {
     Keyboard.dismiss();

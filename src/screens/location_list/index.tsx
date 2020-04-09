@@ -1,3 +1,4 @@
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 
 import { getCompanies, getLocations } from '@services/api';
@@ -27,16 +28,13 @@ export interface Location {
 }
 
 interface Props {
-  navigation: {
-    navigate(name: string): void;
-  };
+  navigation: NavigationProp<ParamListBase>;
 }
 
 export default function location_list({ navigation }: Props) {
   const [locations, setLocations] = useState<
     Realm.Results<Location & Realm.Object>
   >();
-
   async function loadLocations() {
     const storedLocations = await getAllLocations();
     setLocations(storedLocations);
@@ -68,13 +66,15 @@ export default function location_list({ navigation }: Props) {
     loadLocations();
   }, []);
 
-  function goToCompanyListScreen() {
-    navigation.navigate('CompanyList');
+  function goToCompanyListScreen(locationId: number) {
+    navigation.navigate('CompanyList', { locationId: String(locationId) });
   }
 
   function renderItem(item: { item: Location }) {
     return (
-      <TouchableLocationItem onPress={goToCompanyListScreen}>
+      <TouchableLocationItem
+        onPress={() => goToCompanyListScreen(item.item.id)}
+      >
         <LocationItem>
           <Description>{`${item.item.city} - ${item.item.state}`}</Description>
           <Icon name='chevron-right' />
