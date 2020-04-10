@@ -11,11 +11,11 @@ import {
   Logo,
 } from './styled';
 
-const logoHeader = require('@assets/images/logo-header.png');
+const logoHeader = require('@assets/images/logo/logo-light.png');
 
 interface Props {
   goBackEnabled?: boolean;
-  title: string;
+  title?: string;
 }
 
 const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
