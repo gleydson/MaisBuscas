@@ -4,9 +4,11 @@ const { width, height } = Dimensions.get('screen');
 
 export default {
   colors: {
-    primary: '#FED107',
+    primary: '#FFB200',
     secondary: '#000',
-    background: '#F0F0F5',
+    backgroundPrimary: '#232223',
+    backgroundSecondary: '',
+    text: '#fff',
     lighter: '#fff',
     light: '',
     regular: '#7C7C7C',
@@ -15,12 +17,12 @@ export default {
   },
 
   fonts: {
-    bigger: '',
-    big: '',
-    medium: '',
-    small: '',
-    smaller: '',
-    letterSpacing: '',
+    bigger: '18px',
+    big: '16px',
+    medium: '14px',
+    small: '12px',
+    smaller: '10px',
+    letterSpacing: '1px',
   },
 
   metrics: {
