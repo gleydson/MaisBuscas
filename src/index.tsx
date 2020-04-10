@@ -4,20 +4,20 @@ import { StatusBar, SafeAreaView } from 'react-native';
 
 import { ThemeProvider } from 'styled-components';
 
-import light from '@styles/themes/light';
+import dark from '@styles/themes/dark';
 
 import Routes from './routes';
 
 export default function src() {
   return (
-    <ThemeProvider theme={light}>
+    <ThemeProvider theme={dark}>
       <NavigationContainer>
         <StatusBar
-          backgroundColor={light.colors.secondary}
+          backgroundColor={dark.colors.secondary}
           barStyle='light-content'
         />
         <SafeAreaView
-          style={{ flex: 0, backgroundColor: light.colors.secondary }}
+          style={{ flex: 0, backgroundColor: dark.colors.backgroundPrimary }}
         />
         <Routes />
       </NavigationContainer>
