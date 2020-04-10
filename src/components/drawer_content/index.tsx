@@ -110,7 +110,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
       />
       <Item
         label='Compartilhar'
-        icon={iconProps => renderIcon({ name: 'share', ...iconProps })}
+        icon={iconProps => renderIcon({ name: 'heart', ...iconProps })}
         onPress={onShare}
       />
       <Separator />
