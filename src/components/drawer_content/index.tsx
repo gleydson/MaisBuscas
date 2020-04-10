@@ -20,7 +20,7 @@ interface IconProps {
   size: number;
 }
 
-const logo = require('@assets/images/logo/logo.png');
+const logo = require('@assets/images/drawer-image.png');
 
 export default function drawer_content(props: DrawerContentComponentProps) {
   async function onShare() {
@@ -41,10 +41,6 @@ export default function drawer_content(props: DrawerContentComponentProps) {
 
   function goLocations() {
     props.navigation.navigate('LocationList');
-  }
-
-  function goAbout() {
-    props.navigation.navigate('About');
   }
 
   async function openWhatsapp() {
@@ -111,11 +107,6 @@ export default function drawer_content(props: DrawerContentComponentProps) {
         label='Todas as cidades'
         icon={iconProps => renderIcon({ name: 'map', ...iconProps })}
         onPress={goLocations}
-      />
-      <Item
-        label='Sobre Nós'
-        icon={iconProps => renderIcon({ name: 'text', ...iconProps })}
-        onPress={goAbout}
       />
       <Item
         label='Compartilhar'

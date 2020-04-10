@@ -12,10 +12,9 @@ export const Container = styled(DrawerContentScrollView)`
 export const Item = styled(DrawerItem)``;
 
 export const ContainerLogo = styled.View`
-  background-color: ${props => props.theme.colors.primary};
+  background-color: ${props => props.theme.colors.backgroundPrimary};
   justify-content: center;
   align-items: center;
-  padding: 40px;
 `;
 
 export const Logo = styled.Image``;
