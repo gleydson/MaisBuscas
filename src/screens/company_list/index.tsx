@@ -7,18 +7,18 @@ import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
 
 import Realm from 'realm';
-import { RootDrawerParamList } from 'routes';
 
 import CompanyItem from '@components/company_item';
 import Header from '@components/header';
 import Search from '@components/search';
+import { Location } from '@screens/location_list';
 import { getCompanies } from '@services/api';
 import {
-  getAllCompanies,
   saveCompanies,
   getCompaniesByLocationId,
 } from '@services/database/services/company_service';
 
+import { RootStackParamList } from '../../routes';
 import {
   KeyboardSafe,
   Container,
@@ -29,14 +29,19 @@ import {
 export interface Company {
   id: number;
   name: string;
-  address: string;
-  whatsapp: string;
-  website: string;
   description: string;
+  address: string;
+  logoUrl: string;
+  categoryId: string;
+  phone: string;
+  instagram: string;
+  facebook: string;
+  twitter: string;
+  youtube: string;
   locationId: number;
 }
 
-type CompanyListScreenRouteProp = RouteProp<RootDrawerParamList, 'CompanyList'>;
+type CompanyListScreenRouteProp = RouteProp<RootStackParamList, 'CompanyList'>;
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
@@ -44,24 +49,30 @@ interface Props {
 }
 
 export default function company_list({ route, navigation }: Props) {
+  navigation.setOptions({
+    swipeEnabled: true,
+  });
+  //       React.useLayoutEffect(() => {
+  // }, [navigation, route]);
+
   const [companies, setCompanies] = useState<
     Realm.Results<Company & Realm.Object>
   >();
-  const [isFocused, setIsFocused] = useState(false);
   const [searchText, setSearchText] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentLocationId, setCurrentLocationId] = useState('');
+  const [currentLocation, setCurrentLocation] = useState<Location>();
 
   async function loadCompanies() {
-    const data = await getCompaniesByLocationId(currentLocationId, searchText);
+    const value = currentLocation?.id ? String(currentLocation.id) : '';
+    const data = await getCompaniesByLocationId(value, searchText);
     setCompanies(data);
   }
 
   async function fetchCompanies() {
     setIsLoading(true);
     try {
-      const response = await getCompanies();
-      await saveCompanies(response.data);
+      const data = await getCompanies();
+      await saveCompanies(data);
     } catch (err) {
       // eslint-disable-next-line no-console
       console.log(`error ${err}`);
@@ -70,16 +81,9 @@ export default function company_list({ route, navigation }: Props) {
   }
 
   useEffect(() => {
-    setCurrentLocationId(route.params.locationId);
-    const unsubscribe = navigation.addListener('focus', () => {
-      setIsFocused(true);
-    });
+    setCurrentLocation(route.params.location);
     loadCompanies();
-    return () => {
-      unsubscribe();
-      setIsFocused(false);
-    };
-  }, [searchText, currentLocationId, navigation, isFocused]);
+  }, [searchText, currentLocation]);
 
   function goToCompanyDetails() {
     Keyboard.dismiss();
@@ -92,21 +96,17 @@ export default function company_list({ route, navigation }: Props) {
         <CompanyItem
           name={item.item.name}
           address={item.item.address}
-          phone={item.item.whatsapp}
+          phone={item.item.phone}
         />
       </TouchableCompanyItem>
     );
   }
 
-  function handleSearch() {
-    Keyboard.dismiss();
-  }
-
   return (
     <KeyboardSafe>
       <Container>
-        <Header title='example' />
-        <Search onSearch={handleSearch} onChangeText={setSearchText} />
+        <Header title={currentLocation?.name} />
+        <Search onChangeText={setSearchText} />
         <ContainerCompany
           data={companies}
           renderItem={renderItem}

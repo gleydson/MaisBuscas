@@ -1,4 +1,4 @@
-import { FlatList, Keyboard, Platform } from 'react-native';
+import { FlatList, Keyboard, Platform, PickerIOSComponent } from 'react-native';
 
 import styled from 'styled-components/native';
 
@@ -11,7 +11,7 @@ export const Container = styled.View`
 `;
 
 export const ContainerCompany = styled(FlatList as new () => FlatList).attrs({
-  showsVerticalScrollIndicator: false,
+  showsVerticalScrollIndicator: true,
   keyboardShouldPersistTaps: 'handled',
   contentContainerStyle: { paddingHorizontal: 15, paddingVertical: 10 },
 })``;
