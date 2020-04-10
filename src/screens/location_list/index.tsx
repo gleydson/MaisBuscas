@@ -19,12 +19,11 @@ import {
   Icon,
 } from './styled';
 
-const logo = require('@assets/images/logo/logo.png');
+const logo = require('@assets/images/logo/logo-light.png');
 
 export interface Location {
   id: number;
-  state: string;
-  city: string;
+  name: string;
 }
 
 interface Props {
@@ -42,41 +41,39 @@ export default function location_list({ navigation }: Props) {
 
   async function fetchCompanies() {
     try {
-      const response = await getCompanies();
-      await saveCompanies(response.data);
+      const data = await getCompanies();
+      await saveCompanies(data);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`error:  ${err}`);
+      console.log(`company error:  ${err}`);
     }
   }
 
   async function fetchLocations() {
     try {
-      const response = await getLocations();
-      await saveLocations(response.data);
+      const data = await getLocations();
+      await saveLocations(data);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`error:  ${err}`);
+      console.log(`location error: ${err}`);
     }
   }
 
   useEffect(() => {
     fetchLocations();
-    fetchCompanies();
     loadLocations();
+    fetchCompanies();
   }, []);
 
-  function goToCompanyListScreen(locationId: number) {
-    navigation.navigate('CompanyList', { locationId: String(locationId) });
+  function goToCompanyListScreen(location: Location) {
+    navigation.navigate('CompanyList', { location });
   }
 
   function renderItem(item: { item: Location }) {
     return (
-      <TouchableLocationItem
-        onPress={() => goToCompanyListScreen(item.item.id)}
-      >
+      <TouchableLocationItem onPress={() => goToCompanyListScreen(item.item)}>
         <LocationItem>
-          <Description>{`${item.item.city} - ${item.item.state}`}</Description>
+          <Description>{item.item.name}</Description>
           <Icon name='chevron-right' />
         </LocationItem>
       </TouchableLocationItem>
@@ -87,6 +84,7 @@ export default function location_list({ navigation }: Props) {
     <Container>
       <Logo source={logo} />
       <ContainerLocations
+        showsVerticalScrollIndicator={false}
         data={locations}
         renderItem={renderItem}
         keyExtractor={item => String(item.id)}
