@@ -7,8 +7,7 @@ export async function saveLocations(companies: Location[]) {
   try {
     realm.write(() => {
       companies.forEach(location => {
-        const { id, city, state } = location;
-        realm.create(LocationSchema.schema.name, { id, city, state }, true);
+        realm.create(LocationSchema.schema.name, location, true);
       });
     });
   } catch (err) {
@@ -21,7 +20,18 @@ export async function getAllLocations() {
   try {
     return realm
       .objects<Location>(LocationSchema.schema.name)
-      .sorted('city', false);
+      .sorted('name', false);
+  } catch (err) {
+    throw new Error(err);
+  }
+}
+
+export async function getLocationById(locationId: string | number) {
+  const realm = await getRealm();
+  try {
+    return realm
+      .objects<Location>(LocationSchema.schema.name)
+      .filtered('id = $0', Number(locationId));
   } catch (err) {
     throw new Error(err);
   }

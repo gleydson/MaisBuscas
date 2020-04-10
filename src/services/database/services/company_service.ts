@@ -4,23 +4,10 @@ import CompanySchema from '@services/database/schemas/company_schema';
 
 export async function saveCompany(company: Company) {
   const realm = await getRealm();
-  const {
-    id,
-    name,
-    address,
-    whatsapp,
-    website,
-    description,
-    locationId,
-  } = company;
 
   try {
     realm.write(() => {
-      realm.create(
-        CompanySchema.schema.name,
-        { id, name, address, whatsapp, website, description, locationId },
-        true
-      );
+      realm.create(CompanySchema.schema.name, company, true);
     });
   } catch (err) {
     throw new Error(err);
@@ -32,21 +19,7 @@ export async function saveCompanies(companies: Company[]) {
   try {
     realm.write(() => {
       companies.forEach(company => {
-        const {
-          id,
-          name,
-          address,
-          whatsapp,
-          website,
-          description,
-          locationId,
-        } = company;
-
-        realm.create(
-          CompanySchema.schema.name,
-          { id, name, address, whatsapp, website, description, locationId },
-          true
-        );
+        realm.create(CompanySchema.schema.name, company, true);
       });
     });
   } catch (err) {
@@ -62,11 +35,7 @@ export async function getCompaniesByLocationId(
   try {
     const elementsByLocationId = realm
       .objects<Company>(CompanySchema.schema.name)
-      .filtered(
-        // eslint-disable-next-line max-len
-        `locationId = $0`,
-        Number(locationId)
-      );
+      .filtered(`locationId = $0`, Number(locationId));
     return elementsByLocationId
       .filtered(
         `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
