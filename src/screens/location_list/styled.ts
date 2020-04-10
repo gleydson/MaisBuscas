@@ -37,11 +37,6 @@ export const Description = styled.Text`
   color: ${props => props.theme.colors.text};
 `;
 
-export const ContainerSocialMedia = styled.View`
-  height: 60px;
-  width: ${props => props.theme.metrics.widthScreen}px;
-`;
-
 export const Icon = styled(FeatherIcon)`
   font-size: ${props => props.theme.fonts.big};
   color: ${props => props.theme.colors.primary};

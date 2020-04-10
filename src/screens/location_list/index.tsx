@@ -15,7 +15,6 @@ import {
   TouchableLocationItem,
   LocationItem,
   Description,
-  ContainerSocialMedia,
   Icon,
 } from './styled';
 
@@ -34,12 +33,15 @@ export default function location_list({ navigation }: Props) {
   const [locations, setLocations] = useState<
     Realm.Results<Location & Realm.Object>
   >();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   async function loadLocations() {
     const storedLocations = await getAllLocations();
     setLocations(storedLocations);
   }
 
   async function fetchCompanies() {
+    setIsLoading(true);
     try {
       const data = await getCompanies();
       await saveCompanies(data);
@@ -47,6 +49,7 @@ export default function location_list({ navigation }: Props) {
       // eslint-disable-next-line no-console
       console.log(`company error:  ${err}`);
     }
+    setIsLoading(false);
   }
 
   async function fetchLocations() {
@@ -59,9 +62,14 @@ export default function location_list({ navigation }: Props) {
     }
   }
 
+  async function saveAndLoadLocation() {
+    await loadLocations();
+    await fetchLocations();
+    await loadLocations();
+  }
+
   useEffect(() => {
-    fetchLocations();
-    loadLocations();
+    saveAndLoadLocation();
     fetchCompanies();
   }, []);
 
@@ -89,7 +97,6 @@ export default function location_list({ navigation }: Props) {
         renderItem={renderItem}
         keyExtractor={item => String(item.id)}
       />
-      <ContainerSocialMedia />
     </Container>
   );
 }
