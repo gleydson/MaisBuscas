@@ -81,7 +81,9 @@ export default function company_list({ route, navigation }: Props) {
   }
 
   useEffect(() => {
-    setCurrentLocation(route.params.location);
+    if (!currentLocation) {
+      setCurrentLocation(route.params.location);
+    }
     loadCompanies();
   }, [searchText, currentLocation]);
 

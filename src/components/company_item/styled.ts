@@ -18,7 +18,7 @@ export const Logo = styled.Image`
 
 export const ContainerInfo = styled.View`
   flex: 1;
-  padding: 4px;
+  padding: 5px;
   justify-content: space-between;
 `;
 

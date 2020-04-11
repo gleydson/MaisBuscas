@@ -1,4 +1,4 @@
-import { FlatList, Keyboard, Platform, PickerIOSComponent } from 'react-native';
+import { FlatList, Keyboard } from 'react-native';
 
 import styled from 'styled-components/native';
 

@@ -13,7 +13,7 @@ export default function src() {
     <ThemeProvider theme={dark}>
       <NavigationContainer>
         <StatusBar
-          backgroundColor={dark.colors.secondary}
+          backgroundColor={dark.colors.backgroundPrimary}
           barStyle='light-content'
         />
         <SafeAreaView

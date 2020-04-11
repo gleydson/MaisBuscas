@@ -1,7 +1,6 @@
-import { FlatList, StyleSheet } from 'react-native';
+import { FlatList } from 'react-native';
 import FeatherIcon from 'react-native-vector-icons/Feather';
 
-import { darken } from 'polished';
 import styled from 'styled-components/native';
 
 export const Container = styled.SafeAreaView`
