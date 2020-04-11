@@ -1,4 +1,4 @@
-package dev.gleydson.app.freela.buscamais;
+package dev.grodrigues.apps.freela.buscamais;
 
 import com.facebook.react.ReactActivity;
 
