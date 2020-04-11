@@ -4,7 +4,7 @@ const { width, height } = Dimensions.get('screen');
 
 export default {
   colors: {
-    primary: '#FFB200',
+    primary: '#F7981C', // FFB200
     secondary: '#000',
     backgroundPrimary: '#232223',
     backgroundSecondary: '',
