@@ -749,7 +749,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.gleydson.app.freela.buscamais;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.grodrigues.app.freela.buscamais;
 				PRODUCT_NAME = "Mais Busca";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -774,7 +774,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = dev.gleydson.app.freela.buscamais;
+				PRODUCT_BUNDLE_IDENTIFIER = dev.grodrigues.app.freela.buscamais;
 				PRODUCT_NAME = "Mais Busca";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
