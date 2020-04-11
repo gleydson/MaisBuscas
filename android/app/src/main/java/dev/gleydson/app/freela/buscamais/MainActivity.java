@@ -1,4 +1,4 @@
-package com.maisbusca;
+package dev.gleydson.app.freela.buscamais;
 
 import com.facebook.react.ReactActivity;
 

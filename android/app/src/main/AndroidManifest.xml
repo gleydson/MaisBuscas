@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.maisbusca">
+  package="dev.gleydson.app.freela.buscamais">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
