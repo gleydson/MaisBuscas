@@ -40,3 +40,10 @@ export const Icon = styled(FeatherIcon)`
   font-size: ${props => props.theme.fonts.big};
   color: ${props => props.theme.colors.primary};
 `;
+
+export const ContainerDots = styled.View`
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  padding-bottom: 20px;
+`;

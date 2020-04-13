@@ -9,6 +9,7 @@ import { Keyboard } from 'react-native';
 import Realm from 'realm';
 
 import CompanyItem from '@components/company_item';
+import DotsLoad from '@components/dots_load';
 import Header from '@components/header';
 import Search from '@components/search';
 import { Location } from '@screens/location_list';
@@ -24,6 +25,7 @@ import {
   Container,
   ContainerCompany,
   TouchableCompanyItem,
+  ContainerDots,
 } from './styled';
 
 export interface Company {
@@ -49,12 +51,6 @@ interface Props {
 }
 
 export default function company_list({ route, navigation }: Props) {
-  navigation.setOptions({
-    swipeEnabled: true,
-  });
-  //       React.useLayoutEffect(() => {
-  // }, [navigation, route]);
-
   const [companies, setCompanies] = useState<
     Realm.Results<Company & Realm.Object>
   >();
@@ -104,18 +100,31 @@ export default function company_list({ route, navigation }: Props) {
     );
   }
 
+  function RenderLoadOrList() {
+    if (isLoading) {
+      return (
+        <ContainerDots>
+          <DotsLoad />
+        </ContainerDots>
+      );
+    }
+    return (
+      <ContainerCompany
+        data={companies}
+        renderItem={renderItem}
+        keyExtractor={item => String(item.id)}
+        onRefresh={fetchCompanies}
+        refreshing={isLoading}
+      />
+    );
+  }
+
   return (
     <KeyboardSafe>
       <Container>
         <Header title={currentLocation?.name} />
         <Search onChangeText={setSearchText} />
-        <ContainerCompany
-          data={companies}
-          renderItem={renderItem}
-          keyExtractor={item => String(item.id)}
-          onRefresh={fetchCompanies}
-          refreshing={isLoading}
-        />
+        <RenderLoadOrList />
       </Container>
     </KeyboardSafe>
   );

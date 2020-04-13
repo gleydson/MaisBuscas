@@ -1,6 +1,11 @@
-import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import {
+  NavigationProp,
+  ParamListBase,
+  DrawerActions,
+} from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 
+import DotsLoad from '@components/dots_load';
 import { getCompanies, getLocations } from '@services/api';
 import { saveCompanies } from '@services/database/services/company_service';
 import {
@@ -16,6 +21,7 @@ import {
   LocationItem,
   Description,
   Icon,
+  ContainerDots,
 } from './styled';
 
 const logo = require('@assets/images/logo/logo-light.png');
@@ -47,7 +53,7 @@ export default function location_list({ navigation }: Props) {
       await saveCompanies(data);
     } catch (err) {
       // eslint-disable-next-line no-console
-      console.log(`company error:  ${err}`);
+      console.log(`😡company error:  ${err}`);
     }
     setIsLoading(false);
   }
@@ -65,10 +71,10 @@ export default function location_list({ navigation }: Props) {
   async function saveAndLoadLocation() {
     await loadLocations();
     await fetchLocations();
-    await loadLocations();
   }
 
   useEffect(() => {
+    navigation.dispatch(DrawerActions.closeDrawer());
     saveAndLoadLocation();
     fetchCompanies();
   }, []);
@@ -88,15 +94,28 @@ export default function location_list({ navigation }: Props) {
     );
   }
 
-  return (
-    <Container>
-      <Logo source={logo} />
+  function RenderLoadOrList() {
+    if (isLoading) {
+      return (
+        <ContainerDots>
+          <DotsLoad />
+        </ContainerDots>
+      );
+    }
+    return (
       <ContainerLocations
         showsVerticalScrollIndicator={false}
         data={locations}
         renderItem={renderItem}
         keyExtractor={item => String(item.id)}
       />
+    );
+  }
+
+  return (
+    <Container>
+      <Logo source={logo} />
+      <RenderLoadOrList />
     </Container>
   );
 }
