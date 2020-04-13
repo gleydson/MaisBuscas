@@ -13,7 +13,7 @@ const search: React.SFC<Props> = ({ onChangeText }) => {
       <Input
         autoCapitalize='none'
         autoCorrect={false}
-        placeholder='O QUE VOCÊ PROCURA?'
+        placeholder='O que você procura?'
         onChangeText={onChangeText}
       />
     </Container>

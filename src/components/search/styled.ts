@@ -18,6 +18,4 @@ export const Input = styled.TextInput.attrs({
   font-weight: 500;
   color: #333;
   background-color: #fff;
-  text-align: center;
-  text-transform: uppercase;
 `;
