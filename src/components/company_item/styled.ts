@@ -18,13 +18,12 @@ export const Logo = styled.Image`
 
 export const ContainerInfo = styled.View`
   flex: 1;
-  padding: 5px;
-  justify-content: space-between;
+  flex-direction: row;
 `;
 
 export const CompanyName = styled.Text`
-  font-size: 14px;
-  text-transform: uppercase;
+  font-size: ${props => props.theme.fonts.medium};
+  text-transform: capitalize;
   font-weight: 500;
   color: ${props => props.theme.colors.regular};
 `;
@@ -35,27 +34,37 @@ export const ContainerAddress = styled.View`
 `;
 
 export const Address = styled.Text`
-  font-size: 12px;
+  font-size: ${props => props.theme.fonts.small};
   font-weight: 400;
-  text-transform: uppercase;
   color: ${props => props.theme.colors.regular};
 `;
 
+export const ContainerButtons = styled.View`
+  flex-direction: row;
+`;
+
+interface Button {
+  bgColor?: string;
+}
+
 export const Button = styled.TouchableOpacity.attrs({
-  hitSlop: { top: 10, left: 20, bottom: 10, right: 20 },
+  hitSlop: { top: 10, left: 5, bottom: 10, right: 5 },
   activeOpacity: 0.5,
-})`
-  background-color: #0bb1cc;
+  // eslint-disable-next-line prettier/prettier
+}) <Button>`
+  background-color: ${props => props.bgColor || '#0bb1cc'};
   padding: 5px 10px;
   justify-content: center;
   align-items: center;
   width: 80px;
   border-radius: 5px;
+  margin-right: 10px;
 `;
 
 export const ButtonText = styled.Text`
   color: #fff;
-  font-size: 12px;
+  font-size: ${props => props.theme.fonts.smaller};
+  text-transform: lowercase;
   font-weight: 500;
 `;
 
@@ -63,4 +72,35 @@ export const Icon = styled(FontAwesomeIcon)`
   margin-right: 5px;
   color: ${props => props.theme.colors.regular};
   font-size: 12px;
+`;
+
+export const ContainerCompanyInfo = styled.View`
+  flex: 1;
+  justify-content: space-between;
+  padding: 5px;
+`;
+
+export const ContainerSpecialShape = styled.View`
+  width: 30px;
+`;
+
+export const SpecialShape = styled.View`
+  transform: rotate(90deg);
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  border-style: solid;
+  border-right-width: 100px;
+  border-top-width: 100px;
+  border-right-color: transparent;
+  border-top-color: ${props => props.theme.colors.backgroundPrimary};
+`;
+
+export const StarIcon = styled(FontAwesomeIcon)`
+  position: absolute;
+  top: 3px;
+  right: 0;
+  margin-right: 5px;
+  color: #fff;
+  font-size: 9px;
 `;
