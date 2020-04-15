@@ -105,6 +105,17 @@
       }
     ]
   },
+  "overrides": [
+    {
+      "files": [
+        "src/services/i18n/locales/*.ts"
+      ],
+      "rules": {
+        "max-len": "off",
+        "prettier/prettier": "off"
+      }
+    }
+  ],
   "settings": {
     "import/resolver": {
       "node": {
