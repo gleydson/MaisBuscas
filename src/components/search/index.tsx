@@ -1,5 +1,7 @@
 import React from 'react';
 
+import i18n from '@services/i18n';
+
 import { Container, Input } from './styled';
 
 interface Props {
@@ -13,8 +15,10 @@ const search: React.SFC<Props> = ({ onChangeText }) => {
       <Input
         autoCapitalize='none'
         autoCorrect={false}
-        placeholder='O que você procura?'
+        placeholder={i18n.t('search.placeholder')}
         onChangeText={onChangeText}
+        keyboardAppearance='dark'
+        returnKeyType='search'
       />
     </Container>
   );

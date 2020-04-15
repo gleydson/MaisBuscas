@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
 export default function dots_load({
   dots = 3,
   colors = defaultColors,
-  size = 20,
+  size = 10,
   borderRadius,
 }: Props) {
   const [animations, setAnimations] = useState<Animated.Value[]>([]);

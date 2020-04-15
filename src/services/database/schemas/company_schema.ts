@@ -15,6 +15,7 @@ export default class CompanySchema {
       twitter: 'string?',
       youtube: 'string?',
       website: 'string?',
+      isSpecial: 'bool',
       locationId: 'int',
     },
   };

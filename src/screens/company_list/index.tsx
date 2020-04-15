@@ -36,11 +36,14 @@ export interface Company {
   logoUrl: string;
   categoryId: string;
   phone: string;
+  whatsapp: string;
   instagram: string;
   facebook: string;
   twitter: string;
   youtube: string;
+  website: string;
   locationId: number;
+  isSpecial: boolean;
 }
 
 type CompanyListScreenRouteProp = RouteProp<RootStackParamList, 'CompanyList'>;
@@ -50,7 +53,7 @@ interface Props {
   route: CompanyListScreenRouteProp;
 }
 
-export default function company_list({ route, navigation }: Props) {
+export default function company_list({ route }: Props) {
   const [companies, setCompanies] = useState<
     Realm.Results<Company & Realm.Object>
   >();
@@ -88,13 +91,14 @@ export default function company_list({ route, navigation }: Props) {
     // TODO:
   }
 
-  function renderItem(item: { item: Company }) {
+  function renderItem(company: Company) {
     return (
       <TouchableCompanyItem onPress={goToCompanyDetails}>
         <CompanyItem
-          name={item.item.name}
-          address={item.item.address}
-          phone={item.item.phone}
+          name={company.name}
+          address={company.address}
+          phone={company.phone}
+          isSpecial={company.isSpecial}
         />
       </TouchableCompanyItem>
     );
@@ -111,7 +115,7 @@ export default function company_list({ route, navigation }: Props) {
     return (
       <ContainerCompany
         data={companies}
-        renderItem={renderItem}
+        renderItem={({ item }) => renderItem(item)}
         keyExtractor={item => String(item.id)}
         onRefresh={fetchCompanies}
         refreshing={isLoading}

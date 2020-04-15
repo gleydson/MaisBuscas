@@ -2,6 +2,7 @@ import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import styled from 'styled-components/native';
 
@@ -37,6 +38,13 @@ export const Icon = styled(EntypoIcon)`
 `;
 
 export const SocialMediaIcon = styled(FontAwesomeIcon)`
+  color: ${props => props.theme.colors.regular};
+  font-size: 16px;
+  margin-right: -20px;
+  width: 16px;
+`;
+
+export const ExitIcon = styled(MaterialIcon)`
   color: ${props => props.theme.colors.regular};
   font-size: 16px;
   margin-right: -20px;

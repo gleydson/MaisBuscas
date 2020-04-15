@@ -6,7 +6,7 @@ import { Company } from '@screens/company_list';
 import { Location } from '@screens/location_list';
 
 const api = axios.create({
-  baseURL: 'http://apppainel.maisbusca.com/webservice',
+  baseURL: 'http://apppainel.maisbusca.com/api',
 });
 
 export async function getCompanies(): Promise<Company[]> {
@@ -21,12 +21,15 @@ export async function getCompanies(): Promise<Company[]> {
           empresa: string;
           descricao: string;
           endereco: string;
+          webpage: string;
           logo_url: string;
           categoria_id: string;
           telefone: string;
+          whatsapp: string;
           instagram: string;
           facebook: string;
           twitter: string;
+          especial: string;
           youtube: string;
           locationId: number;
         }[];
@@ -41,10 +44,13 @@ export async function getCompanies(): Promise<Company[]> {
             logoUrl: `http://maisbusca.com/delivery/images/delivery/${company.logo_url}`,
             categoryId: company.categoria_id,
             phone: company.telefone,
+            whatsapp: company.whatsapp,
             instagram: company.instagram,
             facebook: company.facebook,
             twitter: company.twitter,
             youtube: company.youtube,
+            website: company.webpage,
+            isSpecial: company.especial === '1',
             locationId,
           });
         });

@@ -1,12 +1,33 @@
 import React from 'react';
-import { View, Text } from 'react-native';
 
-// import { Container } from './styles';
+import Header from '@components/header';
+import { Company } from '@screens/company_list';
 
-export default function company_details() {
+import {
+  Container,
+  Content,
+  CompanyName,
+  BottomBar,
+  ContainerPhone,
+  ContainerWhastapp,
+} from './styled';
+
+interface Props {
+  location: string;
+  company: Company;
+}
+
+export default function company_details({ company }: Props) {
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>service_details</Text>
-    </View>
+    <Container>
+      <Header goBackEnabled />
+      <Content>
+        <CompanyName>{company.name}</CompanyName>
+      </Content>
+      <BottomBar>
+        <ContainerPhone />
+        <ContainerWhastapp />
+      </BottomBar>
+    </Container>
   );
 }

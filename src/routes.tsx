@@ -41,8 +41,8 @@ export default function Routes() {
       <Drawer.Screen
         name='App'
         component={StackScreens}
-        options={({ route }) => {
-          const currentScreen = route?.state?.routes[route?.state?.index].name;
+        options={({ route }: { route: any }) => {
+          const currentScreen = route?.state?.routes[route?.state?.index]?.name;
           return {
             swipeEnabled: currentScreen === 'CompanyList',
           };

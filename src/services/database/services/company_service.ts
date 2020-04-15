@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { Company } from '@screens/company_list';
 import getRealm from '@services/database';
 import CompanySchema from '@services/database/schemas/company_schema';
@@ -36,11 +37,9 @@ export async function getCompaniesByLocationId(
     const elementsByLocationId = realm
       .objects<Company>(CompanySchema.schema.name)
       .filtered(`locationId = $0`, Number(locationId));
-    return elementsByLocationId
-      .filtered(
-        `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
-      )
-      .sorted('name', false);
+    return elementsByLocationId.filtered(
+      `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}' SORT(isSpecial DESC, name ASC)`
+    );
   } catch (err) {
     throw new Error(err);
   }
@@ -52,9 +51,8 @@ export async function getAllCompanies(filter: string) {
     return realm
       .objects<Company>(CompanySchema.schema.name)
       .filtered(
-        `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}'`
-      )
-      .sorted('name', false);
+        `name CONTAINS[c] '${filter}' OR address CONTAINS[c] '${filter}' SORT(isSpecial DESC, name ASC)`
+      );
   } catch (err) {
     throw new Error(err);
   }

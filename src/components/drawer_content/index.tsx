@@ -2,6 +2,8 @@ import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import React from 'react';
 import { Linking, Share } from 'react-native';
 
+import i18n from '@services/i18n';
+
 import {
   Container,
   Item,
@@ -11,14 +13,8 @@ import {
   ContactUs,
   Icon,
   SocialMediaIcon,
+  ExitIcon,
 } from './styled';
-
-interface IconProps {
-  name: string;
-  color: string;
-  focused?: boolean;
-  size: number;
-}
 
 const logo = require('@assets/images/drawer-image.png');
 
@@ -35,6 +31,10 @@ export default function drawer_content(props: DrawerContentComponentProps) {
     }
   }
 
+  async function onCloseApp() {
+    // TODO:
+  }
+
   function goHome() {
     props.navigation.navigate('CompanyList');
   }
@@ -44,9 +44,8 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   async function openWhatsapp() {
-    const message = 'hello';
-    const phone = '+5585999726766';
-    const whatsapp = `whatsapp://send?text=${message}&phone=${phone}`;
+    const phone = '+5569984346425';
+    const whatsapp = `whatsapp://send?phone=${phone}`;
 
     const canOpenURL = await Linking.canOpenURL(whatsapp);
     if (canOpenURL) {
@@ -63,6 +62,10 @@ export default function drawer_content(props: DrawerContentComponentProps) {
       return Linking.openURL(facebook);
     }
     return Linking.openURL(alternativeFacebook);
+  }
+
+  async function openStore() {
+    // TODO:
   }
 
   async function openInstagram() {
@@ -85,63 +88,57 @@ export default function drawer_content(props: DrawerContentComponentProps) {
     }
   }
 
-  function renderIcon({ name, color, size }: IconProps) {
-    return <Icon name={name} color={color} size={size} />;
-  }
-
-  function renderSocialMediaIcon({ name, color, size }: IconProps) {
-    return <SocialMediaIcon name={name} color={color} size={size} />;
-  }
-
   return (
     <Container {...props}>
       <ContainerLogo>
         <Logo source={logo} />
       </ContainerLogo>
       <Item
-        label='Início'
-        icon={iconProps => renderIcon({ name: 'home', ...iconProps })}
+        label={i18n.t('side-menu.start')}
+        icon={() => <Icon name='home' />}
         onPress={goHome}
       />
       <Item
-        label='Todas as cidades'
-        icon={iconProps => renderIcon({ name: 'map', ...iconProps })}
+        label={i18n.t('side-menu.all-cities')}
+        icon={() => <Icon name='map' />}
         onPress={goLocations}
       />
       <Item
-        label='Compartilhar'
-        icon={iconProps => renderIcon({ name: 'heart', ...iconProps })}
+        label={i18n.t('side-menu.rate')}
+        icon={() => <Icon name='star' />}
+        onPress={openStore}
+      />
+      <Item
+        label={i18n.t('side-menu.share')}
+        icon={() => <Icon name='heart' />}
         onPress={onShare}
       />
       <Separator />
-      <ContactUs>Fale conosco</ContactUs>
+      <ContactUs>{i18n.t('side-menu.contact-us')}</ContactUs>
       <Item
         label='Whatsapp'
-        icon={iconProps =>
-          renderSocialMediaIcon({ name: 'whatsapp', ...iconProps })
-        }
+        icon={() => <SocialMediaIcon name='whatsapp' />}
         onPress={openWhatsapp}
       />
       <Item
         label='Facebook'
-        icon={iconProps =>
-          renderSocialMediaIcon({ name: 'facebook', ...iconProps })
-        }
+        icon={() => <SocialMediaIcon name='facebook' />}
         onPress={openFacebook}
       />
       <Item
         label='Instagram'
-        icon={iconProps =>
-          renderSocialMediaIcon({ name: 'instagram', ...iconProps })
-        }
+        icon={() => <SocialMediaIcon name='instagram' />}
         onPress={openInstagram}
       />
       <Item
         label='Site'
-        icon={iconProps =>
-          renderSocialMediaIcon({ name: 'globe', ...iconProps })
-        }
+        icon={() => <SocialMediaIcon name='globe' />}
         onPress={openSite}
+      />
+      <Item
+        label={i18n.t('side-menu.exit')}
+        icon={() => <ExitIcon name='exit-run' />}
+        onPress={onCloseApp}
       />
     </Container>
   );
