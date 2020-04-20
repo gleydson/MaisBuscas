@@ -1,25 +1,17 @@
 import {
-  RouteProp,
-  ParamListBase,
   NavigationProp,
+  ParamListBase
 } from '@react-navigation/native';
 import React, { useState, useEffect } from 'react';
 import { Keyboard } from 'react-native';
-
-import Realm from 'realm';
+import { useSelector, useDispatch } from 'react-redux';
 
 import CompanyItem from '@components/company_item';
 import DotsLoad from '@components/dots_load';
 import Header from '@components/header';
 import Search from '@components/search';
-import { Location } from '@screens/location_list';
-import { getCompanies } from '@services/api';
-import {
-  saveCompanies,
-  getCompaniesByLocationId,
-} from '@services/database/services/company_service';
+import { Company } from '@ducks/companies/types'
 
-import { RootStackParamList } from '../../routes';
 import {
   KeyboardSafe,
   Container,
@@ -27,77 +19,85 @@ import {
   TouchableCompanyItem,
   ContainerDots,
 } from './styled';
-
-export interface Company {
-  id: number;
-  name: string;
-  description: string;
-  address: string;
-  logoUrl: string;
-  categoryId: string;
-  phone: string;
-  whatsapp: string;
-  instagram: string;
-  facebook: string;
-  twitter: string;
-  youtube: string;
-  website: string;
-  locationId: number;
-  isSpecial: boolean;
-}
-
-type CompanyListScreenRouteProp = RouteProp<RootStackParamList, 'CompanyList'>;
+import { ApplicationState } from '../../store';
+import { loadRequest } from '@store/ducks/companies/actions';
+import { setCurrentCompany } from '@store/ducks/settings/actions';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
-  route: CompanyListScreenRouteProp;
 }
 
-export default function company_list({ route }: Props) {
-  const [companies, setCompanies] = useState<
-    Realm.Results<Company & Realm.Object>
-  >();
-  const [searchText, setSearchText] = useState<string>('');
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [currentLocation, setCurrentLocation] = useState<Location>();
+export default function company_list({ navigation }: Props) {
+  const dispatch = useDispatch();
 
-  async function loadCompanies() {
-    const value = currentLocation?.id ? String(currentLocation.id) : '';
-    const data = await getCompaniesByLocationId(value, searchText);
+  const isLoading = useSelector(
+    (state: ApplicationState) => state.companies.loading
+  );
+  const currentLocation = useSelector(
+    (state: ApplicationState) => state.settings.currentLocation
+  );
+  const companiesLoaded = useSelector(
+    (state: ApplicationState) => state.companies.data
+  )
+
+  const [companies, setCompanies] = useState<Company[]>([]);
+  const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
+  const [localLoading, setLocalLoading] = useState<boolean>(false);
+
+  function loadCompanies() {
+    setLocalLoading(true);
+    const data = companiesLoaded.filter(company => company.locationId === currentLocation?.id);
     setCompanies(data);
-  }
-
-  async function fetchCompanies() {
-    setIsLoading(true);
-    try {
-      const data = await getCompanies();
-      await saveCompanies(data);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`error ${err}`);
-    }
-    setIsLoading(false);
+    setFilteredCompanies(data);
+    setLocalLoading(false);
   }
 
   useEffect(() => {
-    if (!currentLocation) {
-      setCurrentLocation(route.params.location);
-    }
     loadCompanies();
-  }, [searchText, currentLocation]);
+  }, [currentLocation]);
 
-  function goToCompanyDetails() {
+  function normalize(text: string) {
+    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  }
+
+  function handleSearch(text: string) {
+    let companiesFiltered = [];
+    if (text) {
+      companiesFiltered = companies.filter(company => {
+        const first = normalize(company.name).includes(normalize(text));
+        const second = normalize(company.address).includes(normalize(text));
+
+        if (first || second) {
+          return company;
+        }
+        return undefined;
+      });
+    } else {
+      companiesFiltered = companies;
+    }
+
+    setFilteredCompanies(companiesFiltered);
+  }
+
+  function goToCompanyDetails(company: Company) {
     Keyboard.dismiss();
-    // TODO:
+    dispatch(setCurrentCompany(company));
+    navigation.navigate('CompanyDetails');
+  }
+
+  function fetchCompanies() {
+    dispatch(loadRequest());
   }
 
   function renderItem(company: Company) {
     return (
-      <TouchableCompanyItem onPress={goToCompanyDetails}>
+      <TouchableCompanyItem onPress={() => goToCompanyDetails(company)}>
         <CompanyItem
           name={company.name}
           address={company.address}
           phone={company.phone}
+          whatsapp={company.whatsapp}
+          logo={company.logoUrl}
           isSpecial={company.isSpecial}
         />
       </TouchableCompanyItem>
@@ -105,7 +105,7 @@ export default function company_list({ route }: Props) {
   }
 
   function RenderLoadOrList() {
-    if (isLoading) {
+    if (localLoading || isLoading) {
       return (
         <ContainerDots>
           <DotsLoad />
@@ -114,7 +114,7 @@ export default function company_list({ route }: Props) {
     }
     return (
       <ContainerCompany
-        data={companies}
+        data={filteredCompanies}
         renderItem={({ item }) => renderItem(item)}
         keyExtractor={item => String(item.id)}
         onRefresh={fetchCompanies}
@@ -127,7 +127,7 @@ export default function company_list({ route }: Props) {
     <KeyboardSafe>
       <Container>
         <Header title={currentLocation?.name} />
-        <Search onChangeText={setSearchText} />
+        <Search onChangeText={handleSearch} />
         <RenderLoadOrList />
       </Container>
     </KeyboardSafe>

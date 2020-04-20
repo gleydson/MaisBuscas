@@ -22,15 +22,13 @@ import {
 } from './styled';
 
 interface Props {
-  logo?: string;
+  logo: string;
   name: string;
   address: string;
-  phone?: string;
-  whatsapp?: string;
-  isSpecial?: boolean;
+  phone: string;
+  whatsapp: string;
+  isSpecial: boolean;
 }
-
-const defaultCompanyLogo = require('@assets/images/default-company-logo.png');
 
 const company_item: React.SFC<Props> = ({
   logo,
@@ -48,16 +46,16 @@ const company_item: React.SFC<Props> = ({
     }
   }
 
-  async function goWhatsapp() {
-    // TODO:
+  function goToWhatsapp() {
+    const number = `whatsapp://send?phone=${whatsapp}`;
+    Linking.openURL(number);
   }
 
   return (
     <Container>
       <ContainerLogo>
         <Logo
-          source={logo ? { uri: logo } : defaultCompanyLogo}
-          defaultSource={defaultCompanyLogo}
+          uri={logo || 'http://apppainel.maisbusca.com/images/default.png'}
         />
       </ContainerLogo>
       <ContainerInfo>
@@ -65,17 +63,16 @@ const company_item: React.SFC<Props> = ({
           <CompanyName>{name}</CompanyName>
           <ContainerAddress>
             <Icon name='map-marker' />
-
             <Address>
-              {address || i18n.t('company-item.address-not-found')}
+              {address || i18n.t('company-item_address-not-found')}
             </Address>
           </ContainerAddress>
           <ContainerButtons>
             <Button onPress={callTo}>
-              <ButtonText>{i18n.t('company-item.button.call')}</ButtonText>
+              <ButtonText>{i18n.t('company-item_button_call')}</ButtonText>
             </Button>
-            {whatsapp && (
-              <Button bgColor='#25D366' onPress={goWhatsapp}>
+            {!!whatsapp && (
+              <Button bgColor='#25D366' onPress={goToWhatsapp}>
                 <ButtonText>whatsapp</ButtonText>
               </Button>
             )}

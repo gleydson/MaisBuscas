@@ -13,17 +13,18 @@ import {
   ContactUs,
   Icon,
   SocialMediaIcon,
-  ExitIcon,
+  // ExitIcon,
 } from './styled';
 
 const logo = require('@assets/images/drawer-image.png');
 
 export default function drawer_content(props: DrawerContentComponentProps) {
   async function onShare() {
+    const link = 'https://play.google.com/store/apps/details?id=br.com.lider.guia.delivery';
     try {
       await Share.share({
         message:
-          'Oi, você já viu o Mais Busca: https://play.google.com/store/apps/details?id=br.com.lider.guia.delivery',
+          `Oi, você já viu o Mais Busca: ${link}`,
       });
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -43,14 +44,10 @@ export default function drawer_content(props: DrawerContentComponentProps) {
     props.navigation.navigate('LocationList');
   }
 
-  async function openWhatsapp() {
+  function openWhatsapp() {
     const phone = '+5569984346425';
     const whatsapp = `whatsapp://send?phone=${phone}`;
-
-    const canOpenURL = await Linking.canOpenURL(whatsapp);
-    if (canOpenURL) {
-      await Linking.openURL(whatsapp);
-    }
+    Linking.openURL(whatsapp);
   }
 
   async function openFacebook() {
@@ -69,8 +66,8 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   async function openInstagram() {
-    const instagram = 'instagram://user?username=gleydsonsr';
-    const alternativeInstagram = 'https://www.instagram.com/gleydsonsr';
+    const instagram = 'instagram://user?username=zuck';
+    const alternativeInstagram = 'https://www.instagram.com/zuck';
 
     const canOpenURL = await Linking.canOpenURL(instagram);
     if (canOpenURL) {
@@ -80,7 +77,7 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   async function openSite() {
-    const website = 'https://github.com/gleydson';
+    const website = 'https://maisbusca.com';
 
     const canOpenURL = await Linking.canOpenURL(website);
     if (canOpenURL) {
@@ -94,27 +91,27 @@ export default function drawer_content(props: DrawerContentComponentProps) {
         <Logo source={logo} />
       </ContainerLogo>
       <Item
-        label={i18n.t('side-menu.start')}
+        label={i18n.t('side-menu_start')}
         icon={() => <Icon name='home' />}
         onPress={goHome}
       />
       <Item
-        label={i18n.t('side-menu.all-cities')}
+        label={i18n.t('side-menu_all-cities')}
         icon={() => <Icon name='map' />}
         onPress={goLocations}
       />
-      <Item
-        label={i18n.t('side-menu.rate')}
+      {/* <Item
+        label={i18n.t('side-menu_rate')}
         icon={() => <Icon name='star' />}
         onPress={openStore}
-      />
+      /> */}
       <Item
-        label={i18n.t('side-menu.share')}
+        label={i18n.t('side-menu_share')}
         icon={() => <Icon name='heart' />}
         onPress={onShare}
       />
       <Separator />
-      <ContactUs>{i18n.t('side-menu.contact-us')}</ContactUs>
+      <ContactUs>{i18n.t('side-menu_contact-us')}</ContactUs>
       <Item
         label='Whatsapp'
         icon={() => <SocialMediaIcon name='whatsapp' />}
@@ -135,11 +132,11 @@ export default function drawer_content(props: DrawerContentComponentProps) {
         icon={() => <SocialMediaIcon name='globe' />}
         onPress={openSite}
       />
-      <Item
+      {/* <Item
         label={i18n.t('side-menu.exit')}
         icon={() => <ExitIcon name='exit-run' />}
         onPress={onCloseApp}
-      />
+      /> */}
     </Container>
   );
 }

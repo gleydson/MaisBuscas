@@ -27,5 +27,5 @@ export const ContainerDots = styled.View`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: ${initialWindowSafeAreaInsets?.bottom}px;
+  padding-bottom: ${(initialWindowSafeAreaInsets?.bottom || 0) + 50}px;
 `;

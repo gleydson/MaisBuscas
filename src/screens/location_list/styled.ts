@@ -1,7 +1,8 @@
 import { FlatList } from 'react-native';
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
 
 import styled from 'styled-components/native';
+import { initialWindowSafeAreaInsets } from 'react-native-safe-area-context';
 
 export const Container = styled.SafeAreaView`
   flex: 1;
@@ -36,7 +37,7 @@ export const Description = styled.Text`
   color: ${props => props.theme.colors.text};
 `;
 
-export const Icon = styled(FeatherIcon)`
+export const Icon = styled(Feather)`
   font-size: ${props => props.theme.fonts.big};
   color: ${props => props.theme.colors.primary};
 `;
@@ -45,5 +46,5 @@ export const ContainerDots = styled.View`
   flex: 1;
   justify-content: flex-end;
   align-items: center;
-  padding-bottom: 20px;
+  padding-bottom: ${(initialWindowSafeAreaInsets?.bottom || 0) + 50}px;
 `;
