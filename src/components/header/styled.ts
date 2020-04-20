@@ -1,4 +1,4 @@
-import FeatherIcon from 'react-native-vector-icons/Feather';
+import { Feather } from '@expo/vector-icons';
 
 import styled from 'styled-components/native';
 
@@ -36,7 +36,7 @@ export const Title = styled.Text`
   margin-top: 10px;
 `;
 
-export const IconFeather = styled(FeatherIcon)`
+export const IconFeather = styled(Feather)`
   color: ${props => props.theme.colors.primary};
   font-weight: 500;
 `;

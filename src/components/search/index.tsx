@@ -15,7 +15,7 @@ const search: React.SFC<Props> = ({ onChangeText }) => {
       <Input
         autoCapitalize='none'
         autoCorrect={false}
-        placeholder={i18n.t('search.placeholder')}
+        placeholder={i18n.t('search_placeholder')}
         onChangeText={onChangeText}
         keyboardAppearance='dark'
         returnKeyType='search'

@@ -41,7 +41,7 @@ const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
       <Left onPress={handleLeftIcon}>{renderLeftIcon()}</Left>
       <Center>
         <Logo source={logoHeader} />
-        <Title>{title}</Title>
+        {!!title && <Title>{title}</Title>}
       </Center>
       <Right />
     </Container>

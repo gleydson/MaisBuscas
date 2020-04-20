@@ -5,11 +5,12 @@ import React from 'react';
 import CustomDrawerContent from '@components/drawer_content';
 import CompanyDetails from '@screens/company_details';
 import CompanyList from '@screens/company_list';
-import LocationList, { Location } from '@screens/location_list';
+import LocationList from '@screens/location_list';
+import { Location } from '@ducks/locations/types';
 
 export type RootStackParamList = {
   LocationList: undefined;
-  CompanyList: { location: Location };
+  CompanyList: undefined;
   CompanyDetails: undefined;
 };
 

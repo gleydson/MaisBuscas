@@ -1,6 +1,6 @@
-import FontAwesomeIcon from 'react-native-vector-icons/FontAwesome';
-
 import styled from 'styled-components/native';
+import { FontAwesome } from '@expo/vector-icons'
+import { Image } from 'react-native-expo-image-cache';
 
 export const Container = styled.View`
   flex-direction: row;
@@ -9,11 +9,15 @@ export const Container = styled.View`
   overflow: hidden;
 `;
 
-export const ContainerLogo = styled.View``;
-
-export const Logo = styled.Image`
+export const ContainerLogo = styled.View`
   width: 100px;
   height: 100px;
+  overflow: hidden;
+`;
+
+export const Logo = styled(Image)`
+  width: 100%;
+  height: 100%;
 `;
 
 export const ContainerInfo = styled.View`
@@ -50,7 +54,6 @@ interface Button {
 export const Button = styled.TouchableOpacity.attrs({
   hitSlop: { top: 10, left: 5, bottom: 10, right: 5 },
   activeOpacity: 0.5,
-  // eslint-disable-next-line prettier/prettier
 }) <Button>`
   background-color: ${props => props.bgColor || '#0bb1cc'};
   padding: 5px 10px;
@@ -68,7 +71,7 @@ export const ButtonText = styled.Text`
   font-weight: 500;
 `;
 
-export const Icon = styled(FontAwesomeIcon)`
+export const Icon = styled(FontAwesome)`
   margin-right: 5px;
   color: ${props => props.theme.colors.regular};
   font-size: 12px;
@@ -96,7 +99,7 @@ export const SpecialShape = styled.View`
   border-top-color: ${props => props.theme.colors.backgroundPrimary};
 `;
 
-export const StarIcon = styled(FontAwesomeIcon)`
+export const StarIcon = styled(FontAwesome)`
   position: absolute;
   top: 3px;
   right: 0;

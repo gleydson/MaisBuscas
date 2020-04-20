@@ -3,15 +3,11 @@ import {
   ParamListBase,
   DrawerActions,
 } from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
 
 import DotsLoad from '@components/dots_load';
-import { getCompanies, getLocations } from '@services/api';
-import { saveCompanies } from '@services/database/services/company_service';
-import {
-  saveLocations,
-  getAllLocations,
-} from '@services/database/services/location_service';
+import { Location } from '@ducks/locations/types';
 
 import {
   Container,
@@ -23,64 +19,32 @@ import {
   Icon,
   ContainerDots,
 } from './styled';
+import { ApplicationState } from '../../store';
+import { loadRequest as loadLocationsRequest } from '@store/ducks/locations/actions';
+import { loadRequest as loadCompaniesRequest } from '@store/ducks/companies/actions'
+import { setCurrentLocation } from '@store/ducks/settings/actions'
 
 const logo = require('@assets/images/logo/logo-light.png');
-
-export interface Location {
-  id: number;
-  name: string;
-}
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
 }
 
 export default function location_list({ navigation }: Props) {
-  const [locations, setLocations] = useState<
-    Realm.Results<Location & Realm.Object>
-  >();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
-  async function loadLocations() {
-    const storedLocations = await getAllLocations();
-    setLocations(storedLocations);
-  }
-
-  async function fetchCompanies() {
-    setIsLoading(true);
-    try {
-      const data = await getCompanies();
-      await saveCompanies(data);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`😡company error:  ${err}`);
-    }
-    setIsLoading(false);
-  }
-
-  async function fetchLocations() {
-    try {
-      const data = await getLocations();
-      await saveLocations(data);
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.log(`location error: ${err}`);
-    }
-  }
-
-  async function saveAndLoadLocation() {
-    await loadLocations();
-    await fetchLocations();
-  }
+  const isLoading = useSelector((state: ApplicationState) => state.locations.loading);
+  const locations = useSelector((state: ApplicationState) => state.locations.data);
 
   useEffect(() => {
     navigation.dispatch(DrawerActions.closeDrawer());
-    saveAndLoadLocation();
-    fetchCompanies();
+    dispatch(loadLocationsRequest());
+    dispatch(loadCompaniesRequest())
   }, []);
 
   function goToCompanyListScreen(location: Location) {
-    navigation.navigate('CompanyList', { location });
+    dispatch(setCurrentLocation(location))
+    navigation.navigate('CompanyList');
   }
 
   function renderItem(item: { item: Location }) {
@@ -102,12 +66,13 @@ export default function location_list({ navigation }: Props) {
         </ContainerDots>
       );
     }
+
     return (
       <ContainerLocations
         showsVerticalScrollIndicator={false}
         data={locations}
         renderItem={renderItem}
-        keyExtractor={item => String(item.id)}
+        keyExtractor={location => String(location.id)}
       />
     );
   }
