@@ -4,7 +4,8 @@ import {
   DrawerActions,
 } from '@react-navigation/native';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux';
+import { RefreshControl } from 'react-native';
 
 import DotsLoad from '@components/dots_load';
 import { Location } from '@ducks/locations/types';
@@ -18,6 +19,7 @@ import {
   Description,
   Icon,
   ContainerDots,
+  Refresh,
 } from './styled';
 import { ApplicationState } from '../../store';
 import { loadRequest as loadLocationsRequest } from '@store/ducks/locations/actions';
@@ -73,6 +75,12 @@ export default function location_list({ navigation }: Props) {
         data={locations}
         renderItem={renderItem}
         keyExtractor={location => String(location.id)}
+        refreshControl={
+          <Refresh
+            refreshing={isLoading}
+            onRefresh={() => dispatch(loadLocationsRequest())}
+          />
+        }
       />
     );
   }

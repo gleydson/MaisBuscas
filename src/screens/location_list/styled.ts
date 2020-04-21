@@ -48,3 +48,7 @@ export const ContainerDots = styled.View`
   align-items: center;
   padding-bottom: ${(initialWindowSafeAreaInsets?.bottom || 0) + 50}px;
 `;
+
+export const Refresh = styled.RefreshControl.attrs({
+  tintColor: '#fff'
+})``;
