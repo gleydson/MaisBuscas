@@ -20,11 +20,7 @@ const reducer: Reducer<LocationsState> = (state = INITIAL_STATE, action) => {
         data: action.payload.data,
       };
     case LocationsTypes.LOAD_SUCCESS_WITHOUT_DATA:
-      return {
-        ...state,
-        loading: false,
-        error: false
-      };
+      return { ...state, loading: false, error: false };
     case LocationsTypes.LOAD_FAILURE:
       return { ...state, loading: false, error: true };
     default:

@@ -20,11 +20,7 @@ const reducer: Reducer<CompaniesState> = (state = INITIAL_STATE, action) => {
         data: action.payload.data,
       };
     case CompaniesTypes.LOAD_SUCCESS_WITHOUT_DATA:
-      return {
-        ...state,
-        loading: false,
-        error: false
-      }
+      return { ...state, loading: false, error: false }
     case CompaniesTypes.LOAD_FAILURE:
       return { ...state, loading: false, error: true };
     default:
