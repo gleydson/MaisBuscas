@@ -13,23 +13,17 @@ import {
   ContactUs,
   Icon,
   SocialMediaIcon,
-  // ExitIcon,
 } from './styled';
 
 const logo = require('@assets/images/drawer-image.png');
 
 export default function drawer_content(props: DrawerContentComponentProps) {
   async function onShare() {
-    const link = 'https://play.google.com/store/apps/details?id=br.com.lider.guia.delivery';
-    try {
-      await Share.share({
-        message:
-          `Oi, você já viu o Mais Busca: ${link}`,
-      });
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.error(error.message);
-    }
+    const link = '';
+    await Share.share({
+      message:
+        `Oi, você já viu o Mais Buscas ${link}`,
+    });
   }
 
   async function onCloseApp() {
@@ -51,8 +45,8 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   async function openFacebook() {
-    const facebook = 'fb://profile/1479476480';
-    const alternativeFacebook = 'https://pt-br.facebook.com/zuck';
+    const facebook = 'fb://page/?id=316259978889108';
+    const alternativeFacebook = 'https://www.facebook.com/appmaisbuscas';
 
     const canOpenURL = await Linking.canOpenURL(facebook);
     if (canOpenURL) {
@@ -66,8 +60,8 @@ export default function drawer_content(props: DrawerContentComponentProps) {
   }
 
   async function openInstagram() {
-    const instagram = 'instagram://user?username=zuck';
-    const alternativeInstagram = 'https://www.instagram.com/zuck';
+    const instagram = 'instagram://user?username=appmaisbuscas';
+    const alternativeInstagram = 'https://www.instagram.com/appmaisbuscas';
 
     const canOpenURL = await Linking.canOpenURL(instagram);
     if (canOpenURL) {
