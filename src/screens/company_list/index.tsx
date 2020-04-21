@@ -46,15 +46,17 @@ export default function company_list({ navigation }: Props) {
 
   function loadCompanies() {
     setLocalLoading(true);
-    const data = companiesLoaded.filter(company => company.locationId === currentLocation?.id);
+    const data = companiesLoaded[currentLocation!.id];
     setCompanies(data);
     setFilteredCompanies(data);
     setLocalLoading(false);
   }
 
   useEffect(() => {
-    loadCompanies();
-  }, [currentLocation]);
+    if (!companies.length && !filteredCompanies.length) {
+      loadCompanies();
+    }
+  }, []);
 
   function normalize(text: string) {
     return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
@@ -64,19 +66,16 @@ export default function company_list({ navigation }: Props) {
     let companiesFiltered = [];
     if (text) {
       companiesFiltered = companies.filter(company => {
-        const first = normalize(company.name).includes(normalize(text));
-        const second = normalize(company.address).includes(normalize(text));
-
-        if (first || second) {
-          return company;
-        }
-        return undefined;
+        const filter = normalize(company.search).includes(normalize(text));
+        return filter ? company : undefined;
       });
     } else {
       companiesFiltered = companies;
     }
 
-    setFilteredCompanies(companiesFiltered);
+    if (filteredCompanies.length !== companiesFiltered.length) {
+      setFilteredCompanies(companiesFiltered);
+    }
   }
 
   function goToCompanyDetails(company: Company) {
@@ -86,7 +85,7 @@ export default function company_list({ navigation }: Props) {
   }
 
   function fetchCompanies() {
-    dispatch(loadRequest());
+    dispatch(loadRequest(currentLocation!.id));
   }
 
   function renderItem(company: Company) {

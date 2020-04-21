@@ -7,6 +7,8 @@ const api = axios.create({
   baseURL: 'http://apppainel.maisbusca.com/api',
 });
 
+// http://apppainel.maisbusca.com/api/getCidade.php
+
 interface LocationRequest {
   id: string;
   anuncios: {
@@ -24,13 +26,14 @@ interface LocationRequest {
     twitter: string;
     especial: string;
     youtube: string;
+    pesquisa: string;
     locationId: number;
   }[]
 }
 
-export async function getCompanies(): Promise<Company[]> {
+export async function getCompanies(locationId: number): Promise<Company[]> {
   try {
-    const response = await api.get('/main.php');
+    const response = await api.post(`/getCidade.php?id=${locationId}`);
     const companies: Company[] = [];
     response.data.forEach(
       (location: LocationRequest) => {
@@ -52,6 +55,7 @@ export async function getCompanies(): Promise<Company[]> {
             youtube: company.youtube,
             website: company.webpage,
             isSpecial: company.especial === '1',
+            search: company.pesquisa,
             locationId,
           });
         });

@@ -39,10 +39,15 @@ export default function location_list({ navigation }: Props) {
   const locations = useSelector((state: ApplicationState) => state.locations.data);
 
   useEffect(() => {
+    if (!locations) {
+      dispatch(loadLocationsRequest());
+    }
+
+    locations.forEach(location => {
+      dispatch(loadCompaniesRequest(location.id))
+    })
     navigation.dispatch(DrawerActions.closeDrawer());
-    dispatch(loadLocationsRequest());
-    dispatch(loadCompaniesRequest())
-  }, []);
+  }, [locations]);
 
   function goToCompanyListScreen(location: Location) {
     dispatch(setCurrentLocation(location))

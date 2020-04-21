@@ -10,8 +10,9 @@ function* load() {
     const locations: Location[] = yield call(ApiService.getLocations);
     if (locations.length) {
       yield put(loadSuccess(locations));
+    } else {
+      yield put(loadSuccessWithoutData());
     }
-    yield put(loadSuccessWithoutData());
   } catch (error) {
     yield put(loadFailure());
   }

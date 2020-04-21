@@ -20,11 +20,14 @@ export interface Company {
   youtube: string;
   website: string;
   locationId: number;
+  search: string;
   isSpecial: boolean;
 }
 
 export interface CompaniesState {
-  readonly data: Company[];
+  readonly data: {
+    [locationId: string]: Company[];
+  };
   readonly loading: boolean;
   readonly error: boolean;
 }
