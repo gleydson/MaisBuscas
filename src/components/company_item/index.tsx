@@ -68,9 +68,11 @@ const company_item: React.SFC<Props> = ({
             </Address>
           </ContainerAddress>
           <ContainerButtons>
-            <Button onPress={callTo}>
-              <ButtonText>{i18n.t('company-item_button_call')}</ButtonText>
-            </Button>
+            {!!phone && (
+              <Button onPress={callTo}>
+                <ButtonText>{i18n.t('company-item_button_call')}</ButtonText>
+              </Button>
+            )}
             {!!whatsapp && (
               <Button bgColor='#25D366' onPress={goToWhatsapp}>
                 <ButtonText>whatsapp</ButtonText>
