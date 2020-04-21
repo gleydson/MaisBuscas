@@ -7,5 +7,14 @@ export default {
   'side-menu_share': 'Compartilhar',
   'side-menu_contact-us': 'Fale conosco',
   'side-menu_exit': 'Fechar',
-  'company-item_address-not-found': 'Endereço não informado'
+  'company-item_address-not-found': 'Endereço não informado',
+  'company-details_call-the-company': 'Ligue para a empresa',
+  'company-details_call-on-whatsapp': 'Chame no Whatsapp',
+  'company-details_social-networks': 'Redes sociais',
+  'company-details_info': 'Essa empresa ou negócio é seu?\n\nFale conosco e melhore suas informações, fazendo com que mais clientes o encontrem!\n\nLigue para 69 3198-0800 e fale com um de nossos consultores.\n\nMais Buscas - Uma lista telefônica que conecta empresas e consumidores.',
+  'whatsapp': 'Whastapp',
+  'facebook': 'Facebook',
+  'instagram': 'Instagram',
+  'phone': 'Phone',
+  'uninformed': 'Não informado'
 };

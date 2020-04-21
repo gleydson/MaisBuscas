@@ -7,5 +7,14 @@ export default {
   'side-menu_share': 'Share this app',
   'side-menu_contact-us': 'Contact us',
   'side-menu_exit': 'Exit',
-  'company-item_address-not-found': 'Address not informed'
+  'company-item_address-not-found': 'Address not informed',
+  'company-details_call-the-company': 'Call the company',
+  'company-details_call-on-whatsapp': 'Call on Whatsapp',
+  'company-details_social-networks': 'Social networks',
+  'company-details_info': 'Is this company or business yours?\n\nTalk to us and improve your information by making more customers find you!\n\nCall 69 3198-0800 and speak to one of our consultants.\n\nMais Buscas - A phone book that connects companies and consumers.',
+  'whatsapp': 'Whastapp',
+  'facebook': 'Facebook',
+  'instagram': 'Instagram',
+  'phone': 'Phone',
+  'uninformed': 'Uninformed'
 };
