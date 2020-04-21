@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 
 import Header from '@components/header';
 import { ApplicationState } from '@store/index';
+import i18n from '@services/i18n';
 
 import {
   Container,
@@ -113,39 +114,39 @@ export default function company_details() {
         />
         <Name>{currentCompany?.name}</Name>
         <Description>{currentCompany?.description}</Description>
-        <Info>
-          Essa empresa ou negócio é seu?{'\n\n'}
-
-          Fale com a gente e melhore suas informações fazendo com que mais clientes encontre você!{'\n\n'}
-
-          Ligue 69 3198-0800 e fale com um de nossos consultores.{'\n\n'}
-
-          Mais Busca - A lista telefônica que conecta empresas e consumidores.
-        </Info>
+        <Info>{i18n.t('company-details_info')}</Info>
         <ContainerContacts>
           <ContactBox>
-            <TitleContact>Telefone</TitleContact>
+            <TitleContact>{i18n.t('phone')}</TitleContact>
             <Contact>{currentCompany?.phone}</Contact>
           </ContactBox>
           <ContactBox>
-            <TitleContact>Whatsapp</TitleContact>
-            <Contact>{currentCompany?.whatsapp || 'Não informado'}</Contact>
+            <TitleContact>{i18n.t('whatsapp')}</TitleContact>
+            <Contact>{currentCompany?.whatsapp || i18n.t('uninformed')}</Contact>
           </ContactBox>
         </ContainerContacts>
-        <TitleSocialMedia>Redes sociais</TitleSocialMedia>
+        <TitleSocialMedia>{i18n.t('company-details_social-networks')}</TitleSocialMedia>
         <ContainerSocialMedia>
-          <SocialMediaBox>
-            <SocialMedia name="globe" onPress={goToWebsite} />
-          </SocialMediaBox>
-          <SocialMediaBox>
-            <SocialMedia name="facebook" onPress={goToFacebook} />
-          </SocialMediaBox>
-          <SocialMediaBox>
-            <SocialMedia name="instagram" onPress={goToInstagram} />
-          </SocialMediaBox>
-          <SocialMediaBox>
-            <SocialMedia name="map" onPress={goToAddress} />
-          </SocialMediaBox>
+          {!!currentCompany?.website && (
+            <SocialMediaBox>
+              <SocialMedia name="globe" onPress={goToWebsite} />
+            </SocialMediaBox>
+          )}
+          {!!currentCompany?.facebook && (
+            <SocialMediaBox>
+              <SocialMedia name="facebook" onPress={goToFacebook} />
+            </SocialMediaBox>
+          )}
+          {!!currentCompany?.instagram && (
+            <SocialMediaBox>
+              <SocialMedia name="instagram" onPress={goToInstagram} />
+            </SocialMediaBox>
+          )}
+          {!!currentCompany?.address && (
+            <SocialMediaBox>
+              <SocialMedia name="map" onPress={goToAddress} />
+            </SocialMediaBox>
+          )}
         </ContainerSocialMedia>
       </Content>
       <BottomBar>
@@ -160,14 +161,14 @@ export default function company_details() {
             onPress={callTo}
           >
             <Icon isDisabled={isPhoneDisabled()} name="phone" />
-            <BottomText isDisabled={isPhoneDisabled()}>Ligue para a empresa</BottomText>
+            <BottomText isDisabled={isPhoneDisabled()}>{i18n.t('company-details_call-the-company')}</BottomText>
           </ContainerPhone>
           <ContainerWhatsapp
             isDisabled={isWhatsappDisabled()}
             onPress={goToWhatsapp}
           >
             <Icon isDisabled={isWhatsappDisabled()} name="whatsapp" />
-            <BottomText isDisabled={isWhatsappDisabled()}>Chame no Whatsapp</BottomText>
+            <BottomText isDisabled={isWhatsappDisabled()}>{i18n.t('company-details_call-on-whatsapp')}</BottomText>
           </ContainerWhatsapp>
         </ContainerButtons>
       </BottomBar>
