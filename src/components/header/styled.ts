@@ -39,4 +39,5 @@ export const Title = styled.Text`
 export const IconFeather = styled(Feather)`
   color: ${props => props.theme.colors.primary};
   font-weight: 500;
+  font-size: 30px;
 `;

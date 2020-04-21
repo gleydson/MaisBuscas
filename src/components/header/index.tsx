@@ -31,9 +31,9 @@ const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
 
   function renderLeftIcon() {
     if (goBackEnabled) {
-      return <IconFeather name='chevron-left' size={30} />;
+      return <IconFeather name='chevron-left' />;
     }
-    return <IconFeather name='menu' size={30} />;
+    return <IconFeather name='menu' />;
   }
 
   return (
