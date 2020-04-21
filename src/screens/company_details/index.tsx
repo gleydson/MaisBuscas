@@ -120,7 +120,7 @@ export default function company_details() {
 
           Ligue 69 3198-0800 e fale com um de nossos consultores.{'\n\n'}
 
-          Mais Busca - A lista telefônica que conecta empresas e consulmidores.
+          Mais Busca - A lista telefônica que conecta empresas e consumidores.
         </Info>
         <ContainerContacts>
           <ContactBox>
