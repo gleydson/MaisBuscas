@@ -75,7 +75,7 @@ const company_item: React.SFC<Props> = ({
             )}
             {!!whatsapp && (
               <Button bgColor='#25D366' onPress={goToWhatsapp}>
-                <ButtonText>whatsapp</ButtonText>
+                <ButtonText>{i18n.t('whatsapp')}</ButtonText>
               </Button>
             )}
           </ContainerButtons>
