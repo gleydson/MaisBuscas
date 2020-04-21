@@ -11,7 +11,7 @@ import {
   Logo,
 } from './styled';
 
-const logoHeader = require('@assets/images/logo/logo-light.png');
+const logoHeader = require('@assets/images/logo/logo.png');
 
 interface Props {
   goBackEnabled?: boolean;

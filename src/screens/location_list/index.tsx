@@ -26,7 +26,7 @@ import { loadRequest as loadLocationsRequest } from '@store/ducks/locations/acti
 import { loadRequest as loadCompaniesRequest } from '@store/ducks/companies/actions'
 import { setCurrentLocation } from '@store/ducks/settings/actions'
 
-const logo = require('@assets/images/logo/logo-light.png');
+const logo = require('@assets/images/logo/logo.png');
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
