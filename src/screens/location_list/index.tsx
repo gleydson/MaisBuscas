@@ -5,7 +5,6 @@ import {
 } from '@react-navigation/native';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RefreshControl } from 'react-native';
 
 import DotsLoad from '@components/dots_load';
 import { Location } from '@ducks/locations/types';
@@ -39,15 +38,16 @@ export default function location_list({ navigation }: Props) {
   const locations = useSelector((state: ApplicationState) => state.locations.data);
 
   useEffect(() => {
-    if (!locations) {
-      dispatch(loadLocationsRequest());
-    }
+    dispatch(loadLocationsRequest());
 
+    navigation.dispatch(DrawerActions.closeDrawer());
+  }, []);
+
+  useEffect(() => {
     locations.forEach(location => {
       dispatch(loadCompaniesRequest(location.id))
     })
-    navigation.dispatch(DrawerActions.closeDrawer());
-  }, [locations]);
+  }, [locations])
 
   function goToCompanyListScreen(location: Location) {
     dispatch(setCurrentLocation(location))
