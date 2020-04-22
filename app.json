@@ -13,7 +13,7 @@
     "icon": "./assets/icon.png",
     "splash": {
       "image": "./assets/splash.png",
-      "resizeMode": "contain",
+      "resizeMode": "cover",
       "backgroundColor": "#201B24"
     },
     "updates": {
@@ -24,7 +24,8 @@
     ],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "dev.grodrigues.app.maisbuscas"
+      "bundleIdentifier": "dev.grodrigues.app.maisbuscas",
+      "buildNumber": "2"
     }
   }
 }
