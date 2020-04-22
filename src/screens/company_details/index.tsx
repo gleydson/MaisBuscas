@@ -60,36 +60,27 @@ export default function company_details() {
     Linking.openURL(number);
   }
 
-  async function goToWebsite() {
+  function goToWebsite() {
     const website = currentCompany?.website;
 
     if (website) {
-      const canOpenURL = await Linking.canOpenURL(website);
-      if (canOpenURL) {
-        Linking.openURL(website);
-      }
+      Linking.openURL(website);
     }
   }
 
-  async function goToFacebook() {
+  function goToFacebook() {
     const facebook = currentCompany?.facebook;
 
     if (facebook) {
-      const canOpenURL = await Linking.canOpenURL(facebook);
-      if (canOpenURL) {
-        Linking.openURL(facebook);
-      }
+      Linking.openURL(facebook);
     }
   }
 
-  async function goToInstagram() {
+  function goToInstagram() {
     const instagram = currentCompany?.instagram;
 
     if (instagram) {
-      const canOpenURL = await Linking.canOpenURL(instagram);
-      if (canOpenURL) {
-        Linking.openURL(instagram);
-      }
+      Linking.openURL(instagram);
     }
   }
 
@@ -128,23 +119,23 @@ export default function company_details() {
         <TitleSocialMedia>{i18n.t('company-details_social-networks')}</TitleSocialMedia>
         <ContainerSocialMedia>
           {!!currentCompany?.website && (
-            <SocialMediaBox>
-              <SocialMedia name="globe" onPress={goToWebsite} />
+            <SocialMediaBox onPressIn={goToWebsite}>
+              <SocialMedia name="globe" />
             </SocialMediaBox>
           )}
           {!!currentCompany?.facebook && (
-            <SocialMediaBox>
-              <SocialMedia name="facebook" onPress={goToFacebook} />
+            <SocialMediaBox onPress={goToFacebook}>
+              <SocialMedia name="facebook" />
             </SocialMediaBox>
           )}
           {!!currentCompany?.instagram && (
-            <SocialMediaBox>
-              <SocialMedia name="instagram" onPress={goToInstagram} />
+            <SocialMediaBox onPress={goToInstagram}>
+              <SocialMedia name="instagram" />
             </SocialMediaBox>
           )}
           {!!currentCompany?.address && (
-            <SocialMediaBox>
-              <SocialMedia name="map" onPress={goToAddress} />
+            <SocialMediaBox onPress={goToAddress}>
+              <SocialMedia name="map" />
             </SocialMediaBox>
           )}
         </ContainerSocialMedia>
