@@ -1,7 +1,8 @@
 {
   "hostType": "lan",
   "lanType": "ip",
-  "dev": false,
-  "minify": true,
-  "urlRandomness": "jc-zgg"
+  "dev": true,
+  "minify": false,
+  "urlRandomness": "ig-g79",
+  "https": false
 }
