@@ -46,6 +46,7 @@
     "react-hooks/exhaustive-deps": "warn",
     "no-unused-expressions": "off",
     "import/prefer-default-export": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "@typescript-eslint/explicit-function-return-type": [
       "error",
       {

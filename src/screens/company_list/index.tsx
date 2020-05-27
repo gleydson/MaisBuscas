@@ -97,7 +97,6 @@ const CompanyList: React.FC<Props> = ({ navigation }) => {
       return (
         <TouchableCompanyItem
           onPress={
-            // eslint-disable-next-line @typescript-eslint/no-empty-function
             company.isSpecial ? () => goToCompanyDetails(company) : () => {}
           }
         >

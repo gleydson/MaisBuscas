@@ -6,7 +6,7 @@ import Header from '@components/header';
 
 import { Container, KeyboardSafe } from './styled';
 
-const IndicateCompany: React.FC = () => {
+const RegisterNewCompany: React.FC = () => {
   const styled = useContext(ThemeContext);
 
   return (
@@ -30,4 +30,4 @@ const IndicateCompany: React.FC = () => {
   );
 };
 
-export default IndicateCompany;
+export default RegisterNewCompany;

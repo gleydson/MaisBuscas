@@ -36,8 +36,8 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = props => {
     props.navigation.navigate('LocationList');
   }, [props]);
 
-  const goIndicateCompany = useCallback(() => {
-    props.navigation.navigate('IndicateCompany');
+  const goToRegisterNewCompany = useCallback(() => {
+    props.navigation.navigate('RegisterNewCompany');
   }, [props]);
 
   const openWhatsapp = useCallback(() => {
@@ -104,7 +104,7 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = props => {
       <Item
         label='Cadastrar meu negócio'
         icon={() => <Icon name='medal' />}
-        onPress={goIndicateCompany}
+        onPress={goToRegisterNewCompany}
       />
       <Item
         label={i18n.t('side-menu_rate')}
