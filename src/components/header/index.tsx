@@ -1,6 +1,7 @@
 import { useNavigation, DrawerActions } from '@react-navigation/native';
-import React from 'react';
+import React, { useCallback } from 'react';
 
+import logoHeader from '@assets/images/logo/logo.png';
 import {
   Container,
   Left,
@@ -11,30 +12,32 @@ import {
   Logo,
 } from './styled';
 
-const logoHeader = require('@assets/images/logo/logo.png');
-
 interface Props {
   goBackEnabled?: boolean;
+  menuEnabled?: boolean;
   title?: string;
 }
 
-const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
+const Header: React.FC<Props> = ({ goBackEnabled, menuEnabled, title }) => {
   const navigation = useNavigation();
 
-  function handleLeftIcon() {
+  const handleLeftIcon = useCallback(() => {
     const canGoBack = navigation.canGoBack();
     if (canGoBack && goBackEnabled) {
       return navigation.goBack();
     }
     return navigation.dispatch(DrawerActions.openDrawer());
-  }
+  }, [goBackEnabled, navigation]);
 
-  function renderLeftIcon() {
+  const renderLeftIcon = useCallback(() => {
     if (goBackEnabled) {
       return <IconFeather name='chevron-left' />;
     }
-    return <IconFeather name='menu' />;
-  }
+    if (menuEnabled) {
+      return <IconFeather name='menu' />;
+    }
+    return null;
+  }, [goBackEnabled, menuEnabled]);
 
   return (
     <Container>
@@ -48,4 +51,4 @@ const header: React.SFC<Props> = ({ goBackEnabled, title }) => {
   );
 };
 
-export default header;
+export default Header;

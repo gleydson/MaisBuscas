@@ -1,6 +1,11 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { DrawerContentScrollView, DrawerItem } from '@react-navigation/drawer';
 import { StyleSheet } from 'react-native';
-import { Entypo, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
+import {
+  Entypo,
+  FontAwesome,
+  MaterialCommunityIcons,
+} from '@expo/vector-icons';
 
 import styled from 'styled-components/native';
 

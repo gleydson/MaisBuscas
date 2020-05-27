@@ -1,9 +1,10 @@
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Linking, Share } from 'react-native';
 
 import i18n from '@services/i18n';
 
+import logo from '@assets/images/drawer-image.png';
 import {
   Container,
   Item,
@@ -15,36 +16,36 @@ import {
   SocialMediaIcon,
 } from './styled';
 
-const logo = require('@assets/images/drawer-image.png');
-
-export default function drawer_content(props: DrawerContentComponentProps) {
-  async function onShare() {
-    const link = '';
+const DrawerContent: React.FC<DrawerContentComponentProps> = props => {
+  const onShare = useCallback(async () => {
+    const link = 'https://app.maisbuscas.com.br';
     await Share.share({
-      message:
-        `Oi, você já viu o Mais Buscas ${link}`,
+      message: `Baixe o Aplicativo Mais Buscas e Encontre o WhatsApp de Qualquer Negócio! Ajude o comércio local compartilhando esse link. ${link}`,
     });
-  }
+  }, []);
 
-  async function onCloseApp() {
-    // TODO:
-  }
+  // const goToTicketList = useCallback(() => {
+  //   props.navigation.navigate('TicketList');
+  // }, [props]);
 
-  function goHome() {
+  const goHome = useCallback(() => {
     props.navigation.navigate('CompanyList');
-  }
+  }, [props]);
 
-  function goLocations() {
+  const goLocations = useCallback(() => {
     props.navigation.navigate('LocationList');
-  }
+  }, [props]);
 
-  function openWhatsapp() {
-    const phone = '+5569984346425';
-    const whatsapp = `whatsapp://send?phone=${phone}`;
+  const goIndicateCompany = useCallback(() => {
+    props.navigation.navigate('IndicateCompany');
+  }, [props]);
+
+  const openWhatsapp = useCallback(() => {
+    const whatsapp = `whatsapp://send?phone=5569984346425&text=Ol%C3%A1.%20Preciso%20de%20suporte%20no%20App%20Mais%20Buscas`;
     Linking.openURL(whatsapp);
-  }
+  }, []);
 
-  async function openFacebook() {
+  const openFacebook = useCallback(async () => {
     const facebook = 'fb://page/?id=316259978889108';
     const alternativeFacebook = 'https://www.facebook.com/appmaisbuscas';
 
@@ -53,13 +54,14 @@ export default function drawer_content(props: DrawerContentComponentProps) {
       return Linking.openURL(facebook);
     }
     return Linking.openURL(alternativeFacebook);
-  }
+  }, []);
 
-  async function openStore() {
-    // TODO:
-  }
+  const openStore = useCallback(() => {
+    const storeLink = 'https://apps.apple.com/br/app/mais-buscas/id1509340100';
+    Linking.openURL(storeLink);
+  }, []);
 
-  async function openInstagram() {
+  const openInstagram = useCallback(async () => {
     const instagram = 'instagram://user?username=appmaisbuscas';
     const alternativeInstagram = 'https://www.instagram.com/appmaisbuscas';
 
@@ -68,16 +70,16 @@ export default function drawer_content(props: DrawerContentComponentProps) {
       return Linking.openURL(instagram);
     }
     return Linking.openURL(alternativeInstagram);
-  }
+  }, []);
 
-  async function openSite() {
-    const website = 'https://maisbusca.com';
+  const openSite = useCallback(async () => {
+    const website = 'http://maisbuscas.com.br';
 
     const canOpenURL = await Linking.canOpenURL(website);
     if (canOpenURL) {
       await Linking.openURL(website);
     }
-  }
+  }, []);
 
   return (
     <Container {...props}>
@@ -95,10 +97,20 @@ export default function drawer_content(props: DrawerContentComponentProps) {
         onPress={goLocations}
       />
       {/* <Item
+        label='Cupons'
+        icon={() => <Icon name='price-tag' />}
+        onPress={goToTicketList}
+      /> */}
+      <Item
+        label='Cadastrar meu negócio'
+        icon={() => <Icon name='medal' />}
+        onPress={goIndicateCompany}
+      />
+      <Item
         label={i18n.t('side-menu_rate')}
         icon={() => <Icon name='star' />}
         onPress={openStore}
-      /> */}
+      />
       <Item
         label={i18n.t('side-menu_share')}
         icon={() => <Icon name='heart' />}
@@ -126,11 +138,8 @@ export default function drawer_content(props: DrawerContentComponentProps) {
         icon={() => <SocialMediaIcon name='globe' />}
         onPress={openSite}
       />
-      {/* <Item
-        label={i18n.t('side-menu.exit')}
-        icon={() => <ExitIcon name='exit-run' />}
-        onPress={onCloseApp}
-      /> */}
     </Container>
   );
-}
+};
+
+export default DrawerContent;

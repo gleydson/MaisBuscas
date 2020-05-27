@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { FontAwesome } from '@expo/vector-icons'
+import { FontAwesome } from '@expo/vector-icons';
 import { Image } from 'react-native-expo-image-cache';
 
 export const Container = styled.View`
@@ -26,8 +26,8 @@ export const ContainerInfo = styled.View`
 `;
 
 export const CompanyName = styled.Text`
-  font-size: ${props => props.theme.fonts.medium};
-  text-transform: capitalize;
+  font-size: ${props => props.theme.fonts.small};
+  text-transform: uppercase;
   font-weight: 500;
   color: ${props => props.theme.colors.regular};
 `;
@@ -54,6 +54,7 @@ interface Button {
 export const Button = styled.TouchableOpacity.attrs({
   hitSlop: { top: 10, left: 5, bottom: 10, right: 5 },
   activeOpacity: 0.5,
+  // eslint-disable-next-line prettier/prettier
 }) <Button>`
   background-color: ${props => props.bgColor || '#0bb1cc'};
   padding: 5px 10px;

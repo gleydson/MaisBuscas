@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Linking } from 'react-native';
 
 import i18n from '@services/i18n';
@@ -30,7 +30,7 @@ interface Props {
   isSpecial: boolean;
 }
 
-const company_item: React.SFC<Props> = ({
+const CompanyItem: React.SFC<Props> = ({
   logo,
   name,
   address,
@@ -38,18 +38,18 @@ const company_item: React.SFC<Props> = ({
   whatsapp,
   isSpecial,
 }) => {
-  async function callTo() {
+  const callTo = useCallback(async () => {
     const tel = `tel:${phone}`;
     const canOpenURL = await Linking.canOpenURL(tel);
     if (canOpenURL) {
       Linking.openURL(tel);
     }
-  }
+  }, [phone]);
 
-  function goToWhatsapp() {
-    const number = `whatsapp://send?phone=${whatsapp}`;
+  const goToWhatsapp = useCallback(() => {
+    const number = `whatsapp://send?phone=${whatsapp}&text=Olá. Encontrei seu contato no App Mais Buscas. https://app.maisbuscas.com.br`;
     Linking.openURL(number);
-  }
+  }, [whatsapp]);
 
   return (
     <Container>
@@ -93,4 +93,4 @@ const company_item: React.SFC<Props> = ({
   );
 };
 
-export default company_item;
+export default CompanyItem;

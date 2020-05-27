@@ -3,7 +3,7 @@ import { Feather } from '@expo/vector-icons';
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-  height: 90px;
+  height: 65px;
   background-color: ${props => props.theme.colors.backgroundPrimary};
   flex-direction: row;
   justify-content: space-between;
