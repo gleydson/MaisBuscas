@@ -7,7 +7,7 @@ export default {
     primary: '#F7981C', // FFB200
     secondary: '#000',
     backgroundPrimary: '#232223',
-    backgroundSecondary: '',
+    backgroundSecondary: '#F2F2F2',
     text: '#fff',
     lighter: '#fff',
     light: '',
