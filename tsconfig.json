@@ -47,7 +47,7 @@
     "src"
   ],
   "files": [
-    "src/@types/styled.d.ts"
+    "src/@types/styled.d.ts", "./src/services/api/getCitiesThatHaveCoupons.ts"
   ],
   "exclude": [
     "node_modules",

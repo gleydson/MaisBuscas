@@ -1,36 +1,51 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-import React from 'react';
 
+import { ApplicationState } from '@store/index';
 import CustomDrawerContent from '@components/drawer_content';
 import CompanyDetails from '@screens/company_details';
 import CompanyList from '@screens/company_list';
 import LocationList from '@screens/location_list';
-import { Location } from '@ducks/locations/types';
-
-export type RootStackParamList = {
-  LocationList: undefined;
-  CompanyList: undefined;
-  CompanyDetails: undefined;
-};
+import IndicateCompany from '@screens/indicate_company';
+import TicketList from '@screens/ticket_list';
+import UpdateUserInfo from '@screens/update_user_info';
 
 const Drawer = createDrawerNavigator();
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createStackNavigator();
 
-export default function Routes() {
-  function StackScreens() {
+const Routes: React.FC = () => {
+  const isPhoneInformed = useSelector(
+    (state: ApplicationState) => state.settings.isPhoneInformed
+  );
+
+  const StackScreens: React.FC = () => (
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        animationEnabled: false,
+        gestureEnabled: false,
+      }}
+    >
+      <Stack.Screen name='LocationList' component={LocationList} />
+      <Stack.Screen name='CompanyList' component={CompanyList} />
+      <Stack.Screen name='CompanyDetails' component={CompanyDetails} />
+      <Stack.Screen name='IndicateCompany' component={IndicateCompany} />
+      <Stack.Screen name='TicketList' component={TicketList} />
+    </Stack.Navigator>
+  );
+
+  if (!isPhoneInformed) {
     return (
       <Stack.Navigator
-        headerMode='float'
         screenOptions={{
           headerShown: false,
           animationEnabled: false,
           gestureEnabled: false,
         }}
       >
-        <Stack.Screen name='LocationList' component={LocationList} />
-        <Stack.Screen name='CompanyList' component={CompanyList} />
-        <Stack.Screen name='CompanyDetails' component={CompanyDetails} />
+        <Stack.Screen name='UpdateUserInfo' component={UpdateUserInfo} />
       </Stack.Navigator>
     );
   }
@@ -42,6 +57,7 @@ export default function Routes() {
       <Drawer.Screen
         name='App'
         component={StackScreens}
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         options={({ route }: { route: any }) => {
           const currentScreen = route?.state?.routes[route?.state?.index]?.name;
           return {
@@ -51,4 +67,6 @@ export default function Routes() {
       />
     </Drawer.Navigator>
   );
-}
+};
+
+export default Routes;

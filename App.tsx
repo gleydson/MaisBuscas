@@ -11,23 +11,26 @@ import dark from './src/styles/themes/dark';
 
 import Routes from './src/routes';
 
-export default function src() {
-  return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <ThemeProvider theme={dark}>
-          <NavigationContainer>
-            <StatusBar
-              backgroundColor={dark.colors.backgroundPrimary}
-              barStyle='light-content'
-            />
-            <SafeAreaView
-              style={{ flex: 0, backgroundColor: dark.colors.backgroundPrimary }}
-            />
-            <Routes />
-          </NavigationContainer>
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
-  );
-}
+const src: React.FC = () => (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <ThemeProvider theme={dark}>
+        <NavigationContainer>
+          <StatusBar
+            backgroundColor={dark.colors.backgroundPrimary}
+            barStyle='light-content'
+          />
+          <SafeAreaView
+            style={{
+              flex: 0,
+              backgroundColor: dark.colors.backgroundPrimary,
+            }}
+          />
+          <Routes />
+        </NavigationContainer>
+      </ThemeProvider>
+    </PersistGate>
+  </Provider>
+);
+
+export default src;
