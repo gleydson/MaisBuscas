@@ -1,31 +1,61 @@
-import { initialWindowSafeAreaInsets } from 'react-native-safe-area-context';
 import { Image } from 'react-native-expo-image-cache';
+import { StyleSheet } from 'react-native';
 
 import styled from 'styled-components/native';
-import { FontAwesome } from '@expo/vector-icons';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
 export const Container = styled.View`
   flex: 1;
 `;
 
-export const Content = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-  contentContainerStyle: {
-    alignItems: 'center',
-    paddingVertical: 20,
-    paddingHorizontal: 30
-  }
-})``;
+interface ContainerSlider {
+  hasGallery: boolean;
+}
+
+export const ContainerSlider = styled.View<ContainerSlider>`
+  height: 200px;
+  background-color: ${props =>
+    props.hasGallery
+      ? props.theme.colors.backgroundPrimary
+      : props.theme.colors.primary};
+`;
+
+export const ContainerLogo = styled.View.attrs({
+  shadowColor: '#000',
+  shadowOffset: {
+    width: 0,
+    height: 1,
+  },
+  shadowOpacity: 0.2,
+  shadowRadius: 1.41,
+
+  elevation: 2,
+})`
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-bottom: 60px;
+`;
 
 export const Logo = styled(Image)`
   width: 120px;
   height: 120px;
   border-radius: 10px;
-  
+
+  position: absolute;
 `;
 
+export const Content = styled.ScrollView.attrs({
+  showsVerticalScrollIndicator: false,
+  contentContainerStyle: {
+    // alignItems: 'center',
+    paddingBottom: 20,
+  },
+})``;
+
 export const Name = styled.Text`
-  padding: 20px 0;
+  padding: 20px 30px;
   font-size: ${props => props.theme.fonts.bigger};
   font-weight: bold;
   text-align: center;
@@ -33,6 +63,7 @@ export const Name = styled.Text`
 
 export const Description = styled.Text`
   text-align: center;
+  padding: 0 30px;
 `;
 
 export const Info = styled.Text`
@@ -41,89 +72,39 @@ export const Info = styled.Text`
   color: ${props => props.theme.colors.dark};
 `;
 
-export const ContainerContacts = styled.View`
+export const Section = styled.View`
+  margin-bottom: 20px;
+  padding: 0 30px;
+`;
+
+export const SectionTitleContent = styled.View`
   flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-  padding: 20px 0;
-`;
-
-export const ContactBox = styled.View`
-  justify-content: center;
   align-items: center;
 `;
 
-export const TitleContact = styled.Text`
-  text-align: center;
-  font-weight: 500;
+export const SectionTitle = styled.Text`
+  color: ${props => props.theme.colors.secondary};
+  text-transform: uppercase;
+  font-weight: bold;
 `;
 
-export const Contact = styled.Text`
-  font-size: ${props => props.theme.fonts.big};
-  font-weight: 600;
+export const SectionBar = styled.View`
+  width: 150px;
+  height: ${StyleSheet.hairlineWidth * 2}px;
+  background-color: ${props => props.theme.colors.secondary};
+  margin: 5px 0 15px 0;
 `;
 
-export const BottomBar = styled.View``;
-
-export const ContainerAddress = styled.View`
-  background-color: ${props => props.theme.colors.backgroundPrimary};
-  border-top-right-radius: 20px;
-  border-top-left-radius: 20px;
-  padding: 15px 0;
-  margin: 0 20px;
+export const SectionContent = styled.View`
+  flex-direction: row;
 `;
 
-export const Address = styled.Text`
-  color: ${props => props.theme.colors.text};
-  text-align: center;
-`;
-
-export const ContainerButtons = styled.View`
-background-color: ${props => props.theme.colors.primary};
-flex-direction: row;
-justify-content: space-around;
-padding-bottom: ${initialWindowSafeAreaInsets?.bottom || 0}px;
-
-`;
-
-interface BottomBar {
-  isDisabled: boolean;
-}
-
-export const ContainerPhone = styled.TouchableOpacity<BottomBar>`
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-`;
-
-export const ContainerWhatsapp = styled.TouchableOpacity.attrs((props: BottomBar) => ({
-  activeOpacity: props.isDisabled ? 1 : 0.5,
-})) <BottomBar>`
-  justify-content: center;
-  align-items: center;
-  padding: 20px 0;
-`;
-
-export const BottomText = styled.Text<BottomBar>`
-  font-size: ${props => props.theme.fonts.small};
-  color: ${({ isDisabled }) => isDisabled ? '#666' : '#000'};
-`;
-
-export const Icon = styled(FontAwesome) <BottomBar>`
-  font-size: ${props => props.theme.fonts.big};
-  color: ${({ isDisabled }) => isDisabled ? '#666' : '#000'};
+export const SectionText = styled.Text`
+  text-transform: capitalize;
 `;
 
 export const ContainerSocialMedia = styled.View`
   flex-direction: row;
-  justify-content: space-around;
-  width: 100%;
-`;
-
-export const TitleSocialMedia = styled.Text`
-  font-size: ${props => props.theme.fonts.big};
-  font-weight: bold;
-  padding-bottom: 15px;
 `;
 
 export const SocialMediaBox = styled.TouchableOpacity`
@@ -133,9 +114,55 @@ export const SocialMediaBox = styled.TouchableOpacity`
   border-radius: 25px;
   justify-content: center;
   align-items: center;
+  margin-right: 20px;
 `;
 
 export const SocialMedia = styled(FontAwesome)`
   color: #fff;
   font-size: 25px;
+`;
+
+export const SectionContacts = styled.TouchableOpacity`
+  flex-direction: row;
+  align-items: center;
+`;
+
+export const SectionMargin = styled.View`
+  margin-right: 30px;
+`;
+
+interface Contact {
+  color: string;
+}
+
+export const Contact = styled.Text<Contact>`
+  font-size: ${props => props.theme.fonts.big};
+  color: ${props => props.color};
+  text-transform: uppercase;
+  font-weight: 600;
+`;
+
+export const ContactIcon = styled(MaterialCommunityIcons)`
+  margin-left: 5px;
+  font-size: ${props => props.theme.fonts.medium};
+`;
+
+export const CategoryContainer = styled.View`
+  align-items: flex-start;
+  justify-content: center;
+  margin: 30px 0;
+  padding: 0 30px;
+`;
+
+export const Tag = styled.View`
+  background-color: ${props => props.theme.colors.primary};
+  border-radius: 4px;
+  overflow: hidden;
+`;
+
+export const Category = styled.Text`
+  padding: 5px 5px;
+  text-transform: uppercase;
+  color: #fff;
+  font-weight: 600;
 `;
