@@ -9,7 +9,7 @@ interface Props {
   onChangeText(text: string): void;
 }
 
-const search: React.SFC<Props> = ({ onChangeText }) => {
+const SearchInput: React.SFC<Props> = ({ onChangeText }) => {
   return (
     <Container>
       <Input
@@ -24,4 +24,4 @@ const search: React.SFC<Props> = ({ onChangeText }) => {
   );
 };
 
-export default search;
+export default SearchInput;

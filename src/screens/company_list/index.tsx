@@ -3,10 +3,10 @@ import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Keyboard } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
-import CompanyItem from '@components/company_item';
-import DotsLoad from '@components/dots_load';
-import Header from '@components/header';
-import Search from '@components/search';
+import CompanyItem from '@components/CompanyItem';
+import DotsLoad from '@components/DotsLoad';
+import Header from '@components/Header';
+import Search from '@components/SearchInput';
 import Banner from '@components/Banner';
 import { Company } from '@ducks/companies/types';
 

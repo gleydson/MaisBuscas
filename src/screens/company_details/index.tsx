@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { SliderBox } from 'react-native-image-slider-box';
 import { ThemeContext } from 'styled-components';
 
-import Header from '@components/header';
+import Header from '@components/Header';
 import { ApplicationState } from '@store/index';
 
 import {

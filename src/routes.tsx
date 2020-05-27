@@ -4,7 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { ApplicationState } from '@store/index';
-import CustomDrawerContent from '@components/drawer_content';
+import CustomDrawerContent from '@components/DrawerContent';
 import CompanyDetails from '@screens/company_details';
 import CompanyList from '@screens/company_list';
 import LocationList from '@screens/location_list';

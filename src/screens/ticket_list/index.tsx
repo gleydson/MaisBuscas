@@ -1,9 +1,9 @@
 import React, { useState, useCallback } from 'react';
 import { FlatList, Linking } from 'react-native';
 
-import Header from '@components/header';
+import Header from '@components/Header';
 import Ticket from '@components/ticket';
-import Modal from '@components/modal';
+import Modal from '@components/Modal';
 import { Container } from './styled';
 
 interface Ticket {

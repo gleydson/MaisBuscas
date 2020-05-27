@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 
 import { setIsPhoneInformed } from '@store/ducks/settings/actions';
-import Header from '@components/header';
+import Header from '@components/Header';
 import { sendPhoneNumber } from '@services/api';
 import { Container, Input, Button, TextButton } from './styled';
 

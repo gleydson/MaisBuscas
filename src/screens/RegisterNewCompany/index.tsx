@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { WebView } from 'react-native-webview';
 import { ThemeContext } from 'styled-components';
 
-import Header from '@components/header';
+import Header from '@components/Header';
 
 import { Container, KeyboardSafe } from './styled';
 
