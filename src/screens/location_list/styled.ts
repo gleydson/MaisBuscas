@@ -50,5 +50,5 @@ export const ContainerDots = styled.View`
 `;
 
 export const Refresh = styled.RefreshControl.attrs({
-  tintColor: '#fff'
+  tintColor: '#fff',
 })``;

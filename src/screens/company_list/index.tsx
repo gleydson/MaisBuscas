@@ -1,8 +1,5 @@
-import {
-  NavigationProp,
-  ParamListBase
-} from '@react-navigation/native';
-import React, { useState, useEffect } from 'react';
+import { NavigationProp, ParamListBase } from '@react-navigation/native';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { Keyboard } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -10,8 +7,11 @@ import CompanyItem from '@components/company_item';
 import DotsLoad from '@components/dots_load';
 import Header from '@components/header';
 import Search from '@components/search';
-import { Company } from '@ducks/companies/types'
+import Banner from '@components/Banner';
+import { Company } from '@ducks/companies/types';
 
+import { loadRequest } from '@store/ducks/companies/actions';
+import { setCurrentCompany } from '@store/ducks/settings/actions';
 import {
   KeyboardSafe,
   Container,
@@ -20,14 +20,12 @@ import {
   ContainerDots,
 } from './styled';
 import { ApplicationState } from '../../store';
-import { loadRequest } from '@store/ducks/companies/actions';
-import { setCurrentCompany } from '@store/ducks/settings/actions';
 
 interface Props {
   navigation: NavigationProp<ParamListBase>;
 }
 
-export default function company_list({ navigation }: Props) {
+const CompanyList: React.FC<Props> = ({ navigation }) => {
   const dispatch = useDispatch();
 
   const isLoading = useSelector(
@@ -38,79 +36,94 @@ export default function company_list({ navigation }: Props) {
   );
   const companiesLoaded = useSelector(
     (state: ApplicationState) => state.companies.data
-  )
+  );
 
-  const [companies, setCompanies] = useState<Company[]>([]);
   const [filteredCompanies, setFilteredCompanies] = useState<Company[]>([]);
-  const [localLoading, setLocalLoading] = useState<boolean>(false);
 
-  function loadCompanies() {
-    setLocalLoading(true);
-    const data = companiesLoaded[currentLocation!.id];
-    setCompanies(data);
-    setFilteredCompanies(data);
-    setLocalLoading(false);
-  }
+  const companies = useMemo(() => {
+    if (currentLocation?.id) {
+      return companiesLoaded[currentLocation.id];
+    }
+    return [];
+  }, [companiesLoaded, currentLocation]);
 
   useEffect(() => {
-    if (!companies.length && !filteredCompanies.length) {
-      loadCompanies();
-    }
+    setFilteredCompanies(companies);
+  }, [companies]);
+
+  const normalize = useCallback((text: string) => {
+    return text
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLowerCase();
   }, []);
 
-  function normalize(text: string) {
-    return text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
-  }
+  const handleSearch = useCallback(
+    (text: string) => {
+      let companiesFiltered = [];
+      if (text && companies.length) {
+        companiesFiltered = companies.filter(company => {
+          const filter = normalize(company.search).includes(normalize(text));
+          return filter ? company : undefined;
+        });
+      } else {
+        companiesFiltered = companies;
+      }
 
-  function handleSearch(text: string) {
-    let companiesFiltered = [];
-    if (text) {
-      companiesFiltered = companies.filter(company => {
-        const filter = normalize(company.search).includes(normalize(text));
-        return filter ? company : undefined;
-      });
-    } else {
-      companiesFiltered = companies;
+      if (filteredCompanies.length !== companiesFiltered.length) {
+        setFilteredCompanies(companiesFiltered);
+      }
+    },
+    [companies, filteredCompanies.length, normalize]
+  );
+
+  const goToCompanyDetails = useCallback(
+    (company: Company) => {
+      Keyboard.dismiss();
+      dispatch(setCurrentCompany(company));
+      navigation.navigate('CompanyDetails');
+    },
+    [dispatch, navigation]
+  );
+
+  const fetchCompanies = useCallback(() => {
+    if (currentLocation?.id) {
+      dispatch(loadRequest(currentLocation.id));
     }
+  }, [currentLocation, dispatch]);
 
-    if (filteredCompanies.length !== companiesFiltered.length) {
-      setFilteredCompanies(companiesFiltered);
-    }
-  }
+  const renderItem = useCallback(
+    (company: Company) => {
+      return (
+        <TouchableCompanyItem
+          onPress={
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            company.isSpecial ? () => goToCompanyDetails(company) : () => {}
+          }
+        >
+          <CompanyItem
+            name={company.name}
+            address={company.address}
+            phone={company.phone}
+            whatsapp={company.whatsapp}
+            logo={company.logoUrl}
+            isSpecial={company.isSpecial}
+          />
+        </TouchableCompanyItem>
+      );
+    },
+    [goToCompanyDetails]
+  );
 
-  function goToCompanyDetails(company: Company) {
-    Keyboard.dismiss();
-    dispatch(setCurrentCompany(company));
-    navigation.navigate('CompanyDetails');
-  }
-
-  function fetchCompanies() {
-    dispatch(loadRequest(currentLocation!.id));
-  }
-
-  function renderItem(company: Company) {
-    return (
-      <TouchableCompanyItem onPress={() => goToCompanyDetails(company)}>
-        <CompanyItem
-          name={company.name}
-          address={company.address}
-          phone={company.phone}
-          whatsapp={company.whatsapp}
-          logo={company.logoUrl}
-          isSpecial={company.isSpecial}
-        />
-      </TouchableCompanyItem>
-    );
-  }
-
-  function RenderLoadOrList() {
-    if (localLoading || isLoading) {
+  const RenderLoadOrList = useCallback(() => {
+    if (isLoading) {
       return (
         <ContainerDots>
           <DotsLoad />
         </ContainerDots>
       );
     }
+
     return (
       <ContainerCompany
         data={filteredCompanies}
@@ -120,15 +133,18 @@ export default function company_list({ navigation }: Props) {
         refreshing={isLoading}
       />
     );
-  }
+  }, [fetchCompanies, filteredCompanies, isLoading, renderItem]);
 
   return (
     <KeyboardSafe>
       <Container>
-        <Header title={currentLocation?.name} />
+        <Header menuEnabled title={currentLocation?.name} />
         <Search onChangeText={handleSearch} />
+        <Banner />
         <RenderLoadOrList />
       </Container>
     </KeyboardSafe>
   );
-}
+};
+
+export default CompanyList;
