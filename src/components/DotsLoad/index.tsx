@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Animated, Easing } from 'react-native';
 
 const defaultColors = ['#F7981C', '#F7981C', '#F7981C'];
@@ -19,12 +19,12 @@ const styles = StyleSheet.create({
   },
 });
 
-const DotsLoad: React.FC<Props> = ({
+export default function dots_load({
   dots = 3,
   colors = defaultColors,
   size = 10,
   borderRadius,
-}) => {
+}: Props) {
   const [animations, setAnimations] = useState<Animated.Value[]>([]);
   const [reverse, setReverse] = useState(false);
 
@@ -32,73 +32,68 @@ const DotsLoad: React.FC<Props> = ({
 
   useEffect(() => {
     const dotAnimations = [];
+    // eslint-disable-next-line no-plusplus
     for (let i = 0; i < dots; i++) {
       dotAnimations.push(new Animated.Value(0));
     }
     setAnimations(dotAnimations);
-  }, [dots]);
+  }, []);
 
-  const floatAnimation = useCallback(
-    (
-      node: Animated.Value | Animated.ValueXY,
-      reverseY: boolean,
-      delay: number
-    ) => {
-      const floatSequence = Animated.sequence([
-        Animated.timing(node, {
-          toValue: reverseY ? 20 : -20,
-          easing: Easing.bezier(0.41, -0.15, 0.56, 1.21),
-          delay,
-          useNativeDriver: true,
-        }),
-        Animated.timing(node, {
-          toValue: reverseY ? -20 : 20,
-          easing: Easing.bezier(0.41, -0.15, 0.56, 1.21),
-          delay,
-          useNativeDriver: true,
-        }),
-        Animated.timing(node, {
-          toValue: 0,
-          delay,
-          useNativeDriver: true,
-        }),
-      ]);
-      return floatSequence;
-    },
-    []
-  );
+  function floatAnimation(
+    node: Animated.Value | Animated.ValueXY,
+    reverseY: any,
+    delay: number
+  ) {
+    const floatSequence = Animated.sequence([
+      Animated.timing(node, {
+        toValue: reverseY ? 20 : -20,
+        easing: Easing.bezier(0.41, -0.15, 0.56, 1.21),
+        delay,
+        useNativeDriver: true,
+      }),
+      Animated.timing(node, {
+        toValue: reverseY ? -20 : 20,
+        easing: Easing.bezier(0.41, -0.15, 0.56, 1.21),
+        delay,
+        useNativeDriver: true,
+      }),
+      Animated.timing(node, {
+        toValue: 0,
+        delay,
+        useNativeDriver: true,
+      }),
+    ]);
+    return floatSequence;
+  }
 
-  const loadingAnimation = useCallback(
-    (nodes: Animated.Value[], reverseY: boolean) => {
-      Animated.parallel(
-        nodes.map((node: Animated.Value, index: number) =>
-          floatAnimation(node, reverseY, index * 100)
-        )
-      ).start(() => {
-        setReverse(!reverse);
-      });
-    },
-    [floatAnimation, reverse]
-  );
+  function loadingAnimation(nodes: any[], reverseY: boolean) {
+    Animated.parallel(
+      nodes.map((node: any, index: number) =>
+        floatAnimation(node, reverseY, index * 100)
+      )
+    ).start(() => {
+      setReverse(!reverse);
+    });
+  }
 
-  const appearAnimation = useCallback(() => {
+  function appearAnimation() {
     Animated.timing(opacity, {
       toValue: 1,
       easing: Easing.ease,
       useNativeDriver: true,
     }).start();
-  }, [opacity]);
+  }
 
   useEffect(() => {
     if (animations.length === 0) return;
     loadingAnimation(animations, reverse);
     appearAnimation();
-  }, [animations, appearAnimation, loadingAnimation, reverse]);
+  }, [animations]);
 
   useEffect(() => {
     if (animations.length === 0) return;
     loadingAnimation(animations, reverse);
-  }, [reverse, animations, loadingAnimation]);
+  }, [reverse, animations]);
 
   return (
     <Animated.View style={[styles.loading, { opacity }]}>
@@ -120,6 +115,4 @@ const DotsLoad: React.FC<Props> = ({
       ))}
     </Animated.View>
   );
-};
-
-export default DotsLoad;
+}

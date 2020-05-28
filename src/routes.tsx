@@ -6,7 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { ApplicationState } from '@store/index';
 import CustomDrawerContent from '@components/DrawerContent';
 import CompanyDetails from '@screens/company_details';
-import CompanyList from '@screens/company_list';
+import CompanyList from '@screens/CompanyList';
 import LocationList from '@screens/location_list';
 import RegisterNewCompany from '@screens/RegisterNewCompany';
 import TicketList from '@screens/ticket_list';

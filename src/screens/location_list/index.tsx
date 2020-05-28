@@ -6,7 +6,7 @@ import {
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import DotsLoad from '@components/dots_load';
+import DotsLoad from '@components/DotsLoad';
 import { Location } from '@ducks/locations/types';
 
 import { loadRequest as loadLocationsRequest } from '@store/ducks/locations/actions';

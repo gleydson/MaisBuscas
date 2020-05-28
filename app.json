@@ -3,7 +3,7 @@
     "name": "Mais Buscas",
     "slug": "MaisBuscas",
     "privacy": "unlisted",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "platforms": [
       "ios",
       "android"
@@ -25,7 +25,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "dev.grodrigues.app.maisbuscas",
-      "buildNumber": "2"
+      "buildNumber": "1"
     },
     "android": {
       "package": "dev.grodrigues.app.maisbuscas"
