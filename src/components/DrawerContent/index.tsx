@@ -1,6 +1,6 @@
 import { DrawerContentComponentProps } from '@react-navigation/drawer';
 import React, { useCallback } from 'react';
-import { Linking, Share } from 'react-native';
+import { Linking, Share, Platform } from 'react-native';
 
 import i18n from '@services/i18n';
 
@@ -23,10 +23,6 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = props => {
       message: `Baixe o Aplicativo Mais Buscas e Encontre o WhatsApp de Qualquer Negócio! Ajude o comércio local compartilhando esse link. ${link}`,
     });
   }, []);
-
-  // const goToTicketList = useCallback(() => {
-  //   props.navigation.navigate('TicketList');
-  // }, [props]);
 
   const goHome = useCallback(() => {
     props.navigation.navigate('CompanyList');
@@ -57,8 +53,13 @@ const DrawerContent: React.FC<DrawerContentComponentProps> = props => {
   }, []);
 
   const openStore = useCallback(() => {
-    const storeLink = 'https://apps.apple.com/br/app/mais-buscas/id1509340100';
-    Linking.openURL(storeLink);
+    const googlePlayStoreLink =
+      'https://play.google.com/store/apps/details?id=br.com.maisbuscas.app';
+    const appleStoreLink =
+      'https://apps.apple.com/br/app/mais-buscas/id1509340100';
+    Linking.openURL(
+      Platform.OS === 'android' ? googlePlayStoreLink : appleStoreLink
+    );
   }, []);
 
   const openInstagram = useCallback(async () => {

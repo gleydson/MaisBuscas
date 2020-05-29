@@ -92,28 +92,6 @@ const CompanyList: React.FC<Props> = ({ navigation }) => {
     }
   }, [currentLocation, dispatch]);
 
-  const renderItem = useCallback(
-    (company: Company) => {
-      return (
-        <TouchableCompanyItem
-          onPress={
-            company.isSpecial ? () => goToCompanyDetails(company) : () => {}
-          }
-        >
-          <CompanyItem
-            name={company.name}
-            address={company.address}
-            phone={company.phone}
-            whatsapp={company.whatsapp}
-            logo={company.logoUrl}
-            isSpecial={company.isSpecial}
-          />
-        </TouchableCompanyItem>
-      );
-    },
-    [goToCompanyDetails]
-  );
-
   const RenderLoadOrList = useCallback(() => {
     if (isLoading) {
       return (
@@ -126,13 +104,29 @@ const CompanyList: React.FC<Props> = ({ navigation }) => {
     return (
       <ContainerCompany
         data={filteredCompanies}
-        renderItem={({ item }) => renderItem(item)}
+        initialNumToRender={10}
         keyExtractor={item => String(item.id)}
         onRefresh={fetchCompanies}
         refreshing={isLoading}
+        renderItem={({ item: company }) => (
+          <TouchableCompanyItem
+            onPress={
+              company.isSpecial ? () => goToCompanyDetails(company) : () => {}
+            }
+          >
+            <CompanyItem
+              name={company.name}
+              address={company.address}
+              phone={company.phone}
+              whatsapp={company.whatsapp}
+              logo={company.logoUrl}
+              isSpecial={company.isSpecial}
+            />
+          </TouchableCompanyItem>
+        )}
       />
     );
-  }, [fetchCompanies, filteredCompanies, isLoading, renderItem]);
+  }, [fetchCompanies, filteredCompanies, goToCompanyDetails, isLoading]);
 
   return (
     <KeyboardSafe>
